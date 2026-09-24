@@ -4,21 +4,12 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { DATA } from "@/data/resume";
 import { cn } from "@/lib/utils";
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+// Self-hosted via the geist package: next/font/google fetches from Google at
+// build time and has broken Vercel builds when Google changed its font URLs.
+import { GeistMono } from "geist/font/mono";
+import { GeistSans } from "geist/font/sans";
 import "./globals.css";
 import { FlickeringGrid } from "@/components/magicui/flickering-grid";
-
-const geist = Geist({
-  subsets: ["latin"],
-  variable: "--font-sans",
-  weight: ["400", "500", "600", "700"],
-});
-
-const geistMono = Geist_Mono({
-  subsets: ["latin"],
-  weight: ["300", "400", "500", "600", "700"],
-  variable: "--font-mono",
-});
 
 export const metadata: Metadata = {
   metadataBase: new URL(DATA.url),
@@ -66,8 +57,8 @@ export default function RootLayout({
       <body
         className={cn(
           "min-h-screen bg-background font-sans antialiased relative",
-          geist.variable,
-          geistMono.variable
+          GeistSans.variable,
+          GeistMono.variable
         )}
       >
         <ThemeProvider attribute="class" defaultTheme="light">
