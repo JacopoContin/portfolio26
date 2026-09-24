@@ -1,0 +1,191 @@
+---
+title: "Intelligent Scheduling"
+publishedAt: "2025-02-01"
+summary: "How Nory moved restaurant groups off habit-based rotas and onto staffing that follows forecasted demand, with the manager still in control of what gets published."
+image: "/nory-scheduling-cover.png"
+---
+
+| | |
+| --- | --- |
+| Company | Nory |
+| Timeline | Jan - Feb 2025 |
+| Role | Product design and management |
+| Platform | Web |
+
+I designed an AI scheduling workflow for hospitality, where managers review, adjust and publish shifts generated from forecasted demand. We designed the system around human authorship: the AI explains its recommendations, proposes changes in a safe review state, and leaves the GM in control of what gets published.
+
+The beta helped us sign our largest enterprise customer, with £5M+ in projected labour savings across their estate in 2025, and became a key product proof point ahead of Nory's Series B.
+
+<MediaContainer
+  src="/case-studies/intelligent-scheduling/prototype.mp4"
+  alt="The scheduling canvas generating a week of shifts against forecasted demand"
+  type="video"
+  fit="natural"
+  autoPlay
+  caption="The prototype: generating a week against forecast, then handing the GM the final say."
+/>
+
+---
+
+## 01. Problem
+
+Labour can account for up to 40% of revenue in hospitality, and the weekly schedule is one of the biggest levers a restaurant has to control it.
+
+Nory already had the forecasting data needed to build better schedules than a GM could manually. We could predict demand, understand staffing requirements, and calculate labour cost. What we had not done was put any of it where the scheduling decision actually happens.
+
+## 02. What we discovered
+
+I led discovery across interviews, workshops, usage data and workflow analysis. Without forecasted demand in view, managers **overstaffed quiet periods and understaffed busy ones**, raising labour cost and hurting service at the same time.
+
+Building one week meant juggling forecasts, labour budgets, availability, roles, compliance rules and department needs, mostly in spreadsheets outside the product. Usage data showed it: **78%** of schedules were still built by hand, cell by cell.
+
+<MediaGrid>
+  <MediaContainer
+    src="/case-studies/intelligent-scheduling/usage-insights.png"
+    alt="Donut chart of 26,860 schedules by creation method: 21,070 manual, 5,417 copied from last week, 367 fill-open"
+    fit="thumb"
+    crop={false}
+    caption="78% of 26,860 schedules built by hand."
+  />
+  <MediaContainer
+    src="/case-studies/intelligent-scheduling/hourly-analysis.png"
+    alt="Hourly charts of actual and forecast orders against actual, forecast and historical staffing, back and front of house"
+    fit="thumb"
+    crop={false}
+    caption="Six months of hourly orders against staffing, per site."
+  />
+  <MediaContainer
+    src="/case-studies/intelligent-scheduling/budget-spreadsheet.png"
+    alt="A weekly budget spreadsheet of expected sales, hours and labour percentage"
+    fit="thumb"
+    crop={false}
+    caption="Weekly budget sheets kept outside the product."
+  />
+</MediaGrid>
+
+<MediaContainer
+  src="/case-studies/intelligent-scheduling/spreadsheet-scheduling.png"
+  alt="A scheduling spreadsheet shared during a customer call, showing labour hours per day by department"
+  fit="natural"
+  caption="What we were really competing with: a spreadsheet, maintained by hand, one tab per site."
+/>
+
+<MediaContainer
+  src="/case-studies/intelligent-scheduling/spreadsheet-labour-calculator.png"
+  alt="A cost-of-labour spreadsheet with formula errors visible in several cells"
+  fit="natural"
+  caption="The cost-of-labour calculator behind it, errors included."
+/>
+
+## 03. Exploring options
+
+With the requirements mapped, I explored where AI could add value across the scheduling workflow: inline recommendations, fully generated schedules, conversational concepts.
+
+The question underneath all of them was the same. Where does the AI decide, and where does the manager stay in control?
+
+<MediaContainer
+  src="/case-studies/intelligent-scheduling/concepts.png"
+  alt="A working board of early concepts: suggested schedules, assign shifts, daily view and an AI review panel"
+  fit="natural"
+  caption="Early concepts exploring AI suggestions, generated schedules and review flows."
+/>
+
+Testing different levels of automation pushed us toward an incremental answer: the AI does the heavy lifting inside a safe review state, and the manager makes the final call. That gave us a foundation we could expand as trust in the system grew.
+
+<MediaContainer
+  src="/case-studies/intelligent-scheduling/gm-walkthrough.mp4"
+  alt="A general manager walking us through next week's schedule on a laptop in a back-of-house prep area"
+  type="video"
+  fit="portrait"
+  autoPlay
+  caption="Where the work actually happens. Any design that needed a quiet hour at a desk was already wrong."
+/>
+
+## 04. The solution
+
+We brought forecasted demand directly into the scheduling workflow.
+
+<MediaContainer
+  src="/case-studies/intelligent-scheduling/schedule-canvas.png"
+  alt="The weekly schedule canvas showing sales forecast, hours and cost of labour per day above shifts grouped by department"
+  fit="natural"
+  caption="The schedule canvas: forecast, labour cost and staffing recommendations in the place the schedule gets built."
+/>
+
+The weekly view surfaces sales, orders, labour cost and staffing by department. The daily view goes an hour at a time, showing current against optimal staffing, with a recommendation inline when the week drifts off budget.
+
+<MediaContainer
+  src="/case-studies/intelligent-scheduling/canvas-daily.png"
+  alt="The daily canvas with hourly orders and cost above shifts, and an inline warning that the week is running 6.55% over the labour budget"
+  fit="natural"
+  caption="The daily view: hourly orders and labour cost, with an inline nudge when the week drifts off budget."
+/>
+
+We also made the AI's reasoning visible. Every recommendation could be traced back to the forecast, historical orders per labour hour (OPLH) and labour targets, so a GM had enough context to understand why a given shift was suggested, and enough standing to disagree with it.
+
+"Create schedule" opens a short sequence that narrates each step, from analysing the forecast to generating the week day by day, with the data sources named in plain language.
+
+<MediaContainer
+  src="/case-studies/intelligent-scheduling/create-schedule.png"
+  alt="The Create schedule button opening a Preparing your schedule panel: analysing forecast"
+  fit="natural"
+  caption="Create schedule opens a short, one-time sequence."
+/>
+
+<MediaContainer
+  src="/case-studies/intelligent-scheduling/generating-step.png"
+  alt="A Creating schedule panel generating the schedule for Monday"
+  fit="natural"
+  caption="The week is generated day by day, with the data source named."
+/>
+
+<MediaContainer
+  src="/case-studies/intelligent-scheduling/creating-modal.png"
+  alt="The Creating schedule step shown over the schedule canvas"
+  fit="natural"
+  caption="The sequence runs over the canvas the GM is about to edit."
+/>
+
+The AI never writes straight into the GM's draft. Its proposal lands in a review state that the GM approves or undoes, and only then becomes their draft. Writing directly into the draft with an undo would have saved clicks, but authorship is what makes trust last.
+
+<MediaContainer
+  src="/case-studies/intelligent-scheduling/proposal-review.png"
+  alt="The AI-proposed schedule in a review state with a 142 hours added notice and Approve and Undo actions"
+  fit="natural"
+  caption="The proposal waits for the GM: approve it, or undo it."
+/>
+
+<MediaContainer
+  src="/case-studies/intelligent-scheduling/final-beta.mp4"
+  alt="The final prototype generating a week of shifts from the Create schedule button"
+  type="video"
+  fit="natural"
+  autoPlay
+  caption="The final prototype: generating a week, surfacing its reasoning, and handing the GM the final say."
+/>
+
+## 05. Impact
+
+The £5M+ figure came from scaling the beta to that customer's full estate: roughly £5.3M a year against £68.1M of labour spend.
+
+<MediaContainer
+  src="/case-studies/intelligent-scheduling/savings-estimate.png"
+  alt="An internal message estimating £5.3M of annual savings against £68.1M of labour spend"
+  fit="natural"
+  caption="The internal estimate behind the number."
+/>
+
+Median time from creating a schedule to sending it was **1.5 minutes** for the beta customer, against **11.6 minutes** for everyone else.
+
+<MediaContainer
+  src="/case-studies/intelligent-scheduling/time-to-publish.png"
+  alt="A funnel chart comparing median time to create and send a schedule for the beta customer against everyone else"
+  fit="natural"
+  caption="Median time from creating a schedule to sending it, beta customer against the rest of the estate."
+/>
+
+## 06. What I learned
+
+When AI operates inside a workflow owned by an expert, trust matters more than autonomy.
+
+The AI does not need to prove it is always right. It needs to make its work understandable, editable and reversible.
