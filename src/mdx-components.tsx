@@ -1,5 +1,7 @@
 import { Callout } from "@/components/mdx/callout";
 import { CodeBlock } from "@/components/mdx/code-block";
+import { Faq, FaqItem } from "@/components/mdx/faq";
+import { Quote } from "@/components/mdx/quote";
 import { MediaContainer, MediaGrid } from "@/components/mdx/media-container";
 import { Children, isValidElement, type ComponentProps, type ReactNode } from "react";
 
@@ -18,6 +20,9 @@ function isBlank(node: ReactNode): boolean {
 
 export const mdxComponents = {
   Callout,
+  Faq,
+  FaqItem,
+  Quote,
   MediaContainer,
   MediaGrid,
   pre: (props: ComponentProps<"pre">) => <CodeBlock {...props} />,

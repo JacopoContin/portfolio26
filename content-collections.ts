@@ -16,6 +16,9 @@ const caseStudies = defineCollection({
         summary: z.string(),
         image: z.string().optional(),
         draft: z.boolean().optional(),
+        /** Manual position on the list page; lower comes first, unset sorts by date after. */
+        order: z.number().optional(),
+        tags: z.array(z.string()).optional(),
         content: z.string(),
     }),
     transform: async (document, context) => {

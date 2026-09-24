@@ -3,6 +3,8 @@ title: "Intelligent Scheduling"
 publishedAt: "2025-02-01"
 summary: "How Nory moved restaurant groups off habit-based rotas and onto staffing that follows forecasted demand, with the manager still in control of what gets published."
 image: "/nory-scheduling-cover.png"
+order: 1
+tags: ["AI", "Hospitality", "B2B SaaS"]
 ---
 
 | | |
@@ -10,11 +12,12 @@ image: "/nory-scheduling-cover.png"
 | Company | Nory |
 | Timeline | Jan - Feb 2025 |
 | Role | Product design and management |
+| Team | ML engineer, 3 engineers, tech lead |
 | Platform | Web |
 
-I designed an AI scheduling workflow for hospitality, where managers review, adjust and publish shifts generated from forecasted demand. We designed the system around human authorship: the AI explains its recommendations, proposes changes in a safe review state, and leaves the GM in control of what gets published.
+<Callout label="TL;DR">
 
-The beta helped us sign our largest enterprise customer, with £5M+ in projected labour savings across their estate in 2025, and became a key product proof point ahead of Nory's Series B.
+An AI scheduling engine for hospitality that learns how each restaurant runs (forecasts, roles, preferences, compliance) and drafts the week for the general manager to review. Designing for **trust over pure automation**, with a review step and visible reasoning, won over sceptical managers. The beta signed Nory's **largest enterprise customer**, with **£5M+** in projected labour savings for 2025, and became a key proof point ahead of the **Series B**.
 
 <MediaContainer
   src="/case-studies/intelligent-scheduling/prototype.mp4"
@@ -22,8 +25,10 @@ The beta helped us sign our largest enterprise customer, with £5M+ in projected
   type="video"
   fit="natural"
   autoPlay
-  caption="The prototype: generating a week against forecast, then handing the GM the final say."
+  caption="The early prototype: generating a week against forecast, then handing the GM the final say."
 />
+
+</Callout>
 
 ---
 
@@ -76,6 +81,14 @@ Building one week meant juggling forecasts, labour budgets, availability, roles,
   fit="natural"
   caption="The cost-of-labour calculator behind it, errors included."
 />
+
+The numbers were only half of it. GMs distrusted algorithmic recommendations on principle: years of software had taught them that automation means losing control.
+
+<Quote by="General manager, interview">
+  "Well... the AI doesn't know that the main door was broken yesterday, does it?"
+</Quote>
+
+So we optimised for **trust first**, and let accuracy compound behind it.
 
 ## 03. Exploring options
 
@@ -164,7 +177,11 @@ The AI never writes straight into the GM's draft. Its proposal lands in a review
   caption="The final prototype: generating a week, surfacing its reasoning, and handing the GM the final say."
 />
 
-## 05. Impact
+## 05. What we scoped out
+
+We cut custom rule editing, conversational AI, department colour coding, and a refresh of legacy design system components. We had also planned a second intelligence layer that turns natural language into business rules. Instead we focused on proving the core bet: that AI scheduling saves money by optimising labour hours.
+
+## 06. Impact
 
 The £5M+ figure came from scaling the beta to that customer's full estate: roughly £5.3M a year against £68.1M of labour spend.
 
@@ -184,8 +201,28 @@ Median time from creating a schedule to sending it was **1.5 minutes** for the b
   caption="Median time from creating a schedule to sending it, beta customer against the rest of the estate."
 />
 
-## 06. What I learned
+## 07. What I learned
 
 When AI operates inside a workflow owned by an expert, trust matters more than autonomy.
 
 The AI does not need to prove it is always right. It needs to make its work understandable, editable and reversible.
+
+## 08. Questions that come up
+
+<Faq>
+  <FaqItem question="What was your role?">
+    Senior Product Designer, and the only person on the product side for the duration of the project. Every product decision (which constraints to weigh, which variables to surface, what the AI's outputs look like in the canvas) landed with me.
+  </FaqItem>
+  <FaqItem question="Who was on the team?">
+    A machine learning engineer I partnered with on the model, plus three engineers and a tech lead. There was no PM during the build; a Head of Product joined toward the end.
+  </FaqItem>
+  <FaqItem question="What AI model did you use?">
+    We built our own: a linear regression model trained on the customer's historical orders and staffing allocation, tuned on the operational signals we wanted it to weigh. Not a general-purpose LLM bolted onto the workflow. I worked closely with the ML engineer on its design.
+  </FaqItem>
+  <FaqItem question="How does the algorithm work?">
+    Two parts in sequence. Staffing prediction works out how many people each department needs, hour by hour, from forecasted demand. Allocation decides which employee gets each shift. My job was surfacing both (headcount, timing, department and the named employee) so a GM could read a proposal at a glance and override any part of it without leaving the canvas.
+  </FaqItem>
+  <FaqItem question="What constraints feed the model?">
+    Five layers: availability (holidays, sickness, time off), compliance rules (minimum rest between shifts), contracted hours per week, cost of labour, and the GM's own habits. If someone always closes on Friday, the model leans toward keeping them there.
+  </FaqItem>
+</Faq>

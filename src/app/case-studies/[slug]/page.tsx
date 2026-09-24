@@ -1,4 +1,4 @@
-import { publishedCaseStudies } from "@/lib/case-studies";
+import { publishedCaseStudies, sortedCaseStudies as orderedCaseStudies } from "@/lib/case-studies";
 import { formatDate } from "@/lib/utils";
 import { DATA } from "@/data/resume";
 import type { Metadata } from "next";
@@ -8,14 +8,6 @@ import { mdxComponents } from "@/mdx-components";
 import Link from "next/link";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 
-function getSortedCaseStudies() {
-  return [...publishedCaseStudies].sort((a, b) => {
-    if (new Date(a.publishedAt) > new Date(b.publishedAt)) {
-      return -1;
-    }
-    return 1;
-  });
-}
 
 export async function generateStaticParams() {
   return publishedCaseStudies.map((study) => ({
@@ -80,7 +72,7 @@ export default async function CaseStudy({
   }>;
 }) {
   const { slug } = await params;
-  const sortedCaseStudies = getSortedCaseStudies();
+  const sortedCaseStudies = orderedCaseStudies;
   const currentIndex = sortedCaseStudies.findIndex(
     (p) => p._meta.path.replace(/\.mdx$/, "") === slug
   );

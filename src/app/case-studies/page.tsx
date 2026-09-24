@@ -1,10 +1,10 @@
 import BlurFade from "@/components/magicui/blur-fade";
-import { publishedCaseStudies } from "@/lib/case-studies";
+import { sortedCaseStudies } from "@/lib/case-studies";
 import Image from "next/image";
 import Link from "next/link";
 import type { Metadata } from "next";
 import { paginate, normalizePage } from "@/lib/pagination";
-import { ChevronRight } from "lucide-react";
+import { ChevronRight, Sparkles } from "lucide-react";
 
 export const metadata: Metadata = {
   title: "Case Studies",
@@ -38,13 +38,6 @@ export default async function CaseStudiesPage({
 }) {
   const { page: pageParam } = await searchParams;
 
-  const caseStudies = publishedCaseStudies;
-  const sortedCaseStudies = [...caseStudies].sort((a, b) => {
-    if (new Date(a.publishedAt) > new Date(b.publishedAt)) {
-      return -1;
-    }
-    return 1;
-  });
 
   const totalPages = Math.ceil(sortedCaseStudies.length / PAGE_SIZE);
   const currentPage = normalizePage(pageParam, totalPages);
@@ -108,6 +101,19 @@ export default async function CaseStudiesPage({
                         <p className="line-clamp-2 text-sm leading-relaxed text-pretty text-muted-foreground">
                           {study.summary}
                         </p>
+                        {study.tags && study.tags.length > 0 && (
+                          <ul className="mt-1 flex flex-wrap gap-1.5" aria-label="Tags">
+                            {study.tags.map((tag) => (
+                              <li
+                                key={tag}
+                                className="inline-flex items-center gap-1 rounded-md border border-border px-1.5 py-0.5 text-xs text-muted-foreground"
+                              >
+                                {tag === "AI" && <Sparkles className="size-3 text-foreground" aria-hidden />}
+                                {tag}
+                              </li>
+                            ))}
+                          </ul>
+                        )}
                       </div>
                     </Link>
                   </BlurFade>
