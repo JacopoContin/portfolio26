@@ -238,7 +238,7 @@ export const DATA = {
         },
         {
           type: "Website",
-          href: "https://jds-ruddy.vercel.app",
+          href: "https://usejds.dev",
           icon: <Icons.globe className="size-3" />,
         },
         {
