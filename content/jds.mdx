@@ -1,0 +1,92 @@
+---
+title: "JDS"
+publishedAt: "2026-09-29"
+summary: "An opinionated design system for AI agent and voice interfaces, installable through the shadcn CLI."
+image: "/jds-cover.png"
+order: 4
+tags: ["Design system", "AI", "Voice"]
+---
+
+| | |
+| --- | --- |
+| Type | Side project |
+| Role | Designer & engineer |
+| Stack | Base UI, Tailwind, Motion, WebGL, shadcn registry |
+| Links | [jds-ruddy.vercel.app](https://jds-ruddy.vercel.app) · [GitHub](https://github.com/JacopoContin/jds) |
+
+JDS is my design system for AI agent and voice products. It covers the general UI primitives plus the surfaces most systems skip: voice orbs, agent side panels, prompt inputs, tool calls, approvals, reasoning and live transcripts.
+
+It ships as source through a shadcn registry, so every component lands in your repo and stays yours to edit.
+
+```bash
+pnpm dlx shadcn@latest add @jds/style @jds/prompt-input
+```
+
+The docs site is the case study. Below are the main explorations.
+
+---
+
+## Voice orb
+
+Ten orb styles, from particle spheres to WebGL plasma, liquid and glass. Every variant takes the same states (idle, connecting, listening, thinking, speaking, error) and reacts to mic level. The studio previews each one in context: on stage, in a side panel, in a call and compact.
+
+<MediaContainer
+  src="/case-studies/jds/orb-presets.mp4"
+  poster="/case-studies/jds/orb-presets-poster.jpg"
+  alt="The voice orb studio cycling through presets: sphere, halo, signal, iris, ember, glass, plasma, lava, mercury, equalizer, print and dot"
+  type="video"
+  fit="natural"
+  autoPlay
+/>
+
+<MediaContainer
+  src="/case-studies/jds/studio-voice-orb.png"
+  alt="Voice orb studio with presets, style, color and size controls, and the state switcher under the preview"
+  fit="natural"
+  caption="Presets, shape, material and palette on the left. The generated code matches the preview."
+/>
+
+[Open the voice orb studio →](https://jds-ruddy.vercel.app/studio/voice-orb)
+
+## Agent side panel
+
+The copilot pattern: docked or floating, left or right, card, page or glass surface, and slide, fade or spring entrances. Chat and voice live in the same panel, with voice reachable from the composer, the header, or both.
+
+<MediaContainer
+  src="/case-studies/jds/studio-side-panel.png"
+  alt="Side panel studio showing a docked agent panel with a page-context composer next to a skeleton app"
+  fit="natural"
+/>
+
+[Open the side panel studio →](https://jds-ruddy.vercel.app/studio/side-panel)
+
+## Prompt input
+
+One composer, configured for chat, research, coding, copilot or workspace use: context header, scope picker, tools, model picker, dictation and send behaviour. Previewed in a new chat, a conversation and a side panel, across ready, submitted, streaming and error states.
+
+<MediaContainer
+  src="/case-studies/jds/studio-prompt-input.png"
+  alt="Prompt input studio with presets and a composer showing model picker, dictation and web search tools"
+  fit="natural"
+/>
+
+[Open the prompt input studio →](https://jds-ruddy.vercel.app/studio/prompt-input)
+
+## Recipes
+
+Complete experiences composed from the components, installable as one block. The voice agent pairs the orb, captions and call controls with the agent's tool calls and transcript. Recipes that talk to a backend read a session interface, so a simulated session can be swapped for a real one without touching the UI.
+
+<MediaContainer
+  src="/case-studies/jds/recipes-voice-agent.png"
+  alt="Voice agent recipe: a connected call with the orb, live caption and call controls, with actions and transcript on the right"
+  fit="natural"
+/>
+
+<MediaContainer
+  src="/case-studies/jds/recipes.png"
+  alt="Recipes index filtered by voice, side panel, chat and operations"
+  fit="natural"
+  caption="Voice agent, agent run, side panel, chat app, inbox, settings, onboarding and run history."
+/>
+
+[Browse the recipes →](https://jds-ruddy.vercel.app/recipes)

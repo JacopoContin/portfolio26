@@ -270,6 +270,45 @@ export const DATA = {
       video: "",
     },
     {
+      title: "JDS",
+      hidden: false,
+      slug: "jds",
+      href: "/case-studies/jds",
+      dates: "2026",
+      active: true,
+      summary:
+        "An opinionated design system for AI agent and voice interfaces, installable through the shadcn CLI.",
+      description:
+        "An opinionated design system for AI agent and voice interfaces, distributed as source through a shadcn registry. Ten voice orb styles, agent side panels, prompt inputs and complete recipes, each with a studio to configure it and copy the code.",
+      technologies: [
+        "Design Systems",
+        "Base UI",
+        "Tailwind CSS",
+        "Motion",
+        "WebGL",
+        "Voice UI",
+      ],
+      links: [
+        {
+          type: "Case Study",
+          href: "/case-studies/jds",
+          icon: <Icons.globe className="size-3" />,
+        },
+        {
+          type: "Website",
+          href: "https://jds-ruddy.vercel.app",
+          icon: <Icons.globe className="size-3" />,
+        },
+        {
+          type: "Source",
+          href: "https://github.com/JacopoContin/jds",
+          icon: <Icons.github className="size-3" />,
+        },
+      ],
+      image: "/jds-cover.png",
+      video: "",
+    },
+    {
       title: "Nory Pay",
       hidden: true,
       slug: "people-for-payroll",
