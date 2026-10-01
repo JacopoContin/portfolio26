@@ -1,0 +1,137 @@
+---
+title: "Premium Pay Rates"
+publishedAt: "2024-09-01"
+summary: "Letting restaurant managers configure overtime, night, weekend and holiday premiums that flow from scheduling to timecards to payroll."
+image: "/case-studies/premium-pay-rates/rule-panel.png"
+order: 1
+tags: ["Payroll", "Hospitality", "B2B SaaS"]
+---
+
+<Callout label="TL;DR">
+
+Premium pay rules (overtime, nights, weekends, holidays) that restaurant managers configure once and that flow automatically from **scheduling to timecards to payroll**, replacing manual adjustments at the end of each pay cycle. I designed for **clarity and verification over configuration speed**, with a plain-language summary of every rule before saving. In the beta, scheduled labour cost accuracy rose from **85% to 98%**.
+
+<MediaContainer
+  src="/case-studies/premium-pay-rates/rule-panel-tldr.png"
+  alt="Nory's labour settings with a rule panel open: rule name, a natural-language description with Auto fill with Nory, rule settings by day of the week or worked hours, and pay rate"
+  fit="natural"
+/>
+
+</Callout>
+
+---
+
+## Context
+
+Hospitality employees aren't always paid a single rate. Overtime, nights, weekends and holidays can all trigger different rates, and multiple conditions can apply to the same shift.
+
+Nory needed to calculate these premiums across **scheduling, timecards and payroll**, replacing a process that still relied heavily on manual adjustments.
+
+## 1. Discovery
+
+I started by reviewing how **workforce management platforms** handled premium pay, mapping the different conditions and rule structures they supported.
+
+I then spoke with several Nory customers across **Finance, Operations and restaurant management** to understand how these policies worked in practice, from defining company-wide pay policies to managing exceptions at individual restaurants.
+
+The research helped us identify the core requirements:
+
+- **When it applies:** specific days of the week, all day or within a time range
+- **Hours worked:** premiums triggered after an employee works beyond a defined threshold
+- **How they're paid:** percentage uplift or fixed amount
+- **Who receives it:** hourly, daily or salaried employees
+- **Which roles qualify:** rules could apply only to specific positions or departments
+- **Combinations:** multiple conditions could apply to the same shift
+
+For example, a restaurant might define a rule like **"FOH employees working Sunday between 18:00–22:00 receive an additional 25%."**
+
+This gave us the core design challenge: **how might we let managers combine multiple pay conditions while making the resulting rule easy to understand and verify?**
+
+<MediaContainer
+  src="/case-studies/premium-pay-rates/competitor-audit.png"
+  alt="A board of competitor screenshots grouped by product: Harri, Rotaready, 7shifts and RotaPlanner, with shift-specific and threshold rule flows"
+  fit="natural"
+/>
+
+## 2. Mapping the experience
+
+Mapping the end-to-end journey revealed that the problem extended beyond rule configuration.
+
+Previously, managers reviewed worked hours and **manually tracked premiums and bonuses**, which were then passed to our payroll team for processing. Premium Pay allowed these rules to flow automatically from **scheduling → timecards → payroll**.
+
+<MediaContainer
+  src="/case-studies/premium-pay-rates/journey-map.png"
+  alt="Journey map in four stages: rule set up in settings, the schedule view flagging premium shifts, manager review of timecards with flagged entries, and payroll processing with a CSV export of gross wages"
+  fit="natural"
+  caption="From rule set up to payroll: one rule, carried through every step."
+/>
+
+## 3. Exploring UI options
+
+I narrowed the exploration to two approaches: a **structured form with visible options** and a more **compact configuration using dropdowns**. Both supported the same rules, with different trade-offs between visibility and compactness.
+
+I prioritised **clarity and verification over configuration speed**. Important choices remained visible, conditions were grouped around **when, how much and who**, and additional complexity appeared only when relevant. A plain-language summary let managers verify the resulting rule before saving.
+
+<MediaContainer
+  src="/case-studies/premium-pay-rates/ui-options.png"
+  alt="Two rows of rule panels: the top row uses visible radio options for rule type, the bottom row uses a rule type dropdown, both ending in a plain-language summary"
+  fit="natural"
+/>
+
+I also explored a more experimental direction where managers could **describe a rule in natural language**, with Nory translating it into a structured configuration for review.
+
+<MediaContainer
+  src="/case-studies/premium-pay-rates/natural-language-rule.png"
+  alt="A manager types Increase Sunday pay rate by 10% into the description, and Auto fill with Nory produces a rule set to Sunday, all day, 10% percentage, for all employee types"
+  fit="natural"
+  caption="Exploring LLM based rule creation: describe the rule in natural language"
+/>
+
+## 4. Final design
+
+I turned the selected direction into a **clickable high-fidelity prototype covering the different rules, combinations and edge cases**, which I tested with customers before producing detailed specifications for engineering.
+
+<MediaContainer
+  src="/case-studies/premium-pay-rates/prototype-flows.png"
+  alt="A prototype board of connected flows for day-of-the-week, time range, weekly hours and daily hours rules, each ending in a save state"
+  fit="natural"
+  caption="Clickable prototype tested with customers"
+/>
+
+<MediaContainer
+  src="/case-studies/premium-pay-rates/design-specs.png"
+  alt="Design spec for the pay rate field: a Sunday Bonus rule with the pay rate dropdown open on multiplier points, percentage, extra pay and fixed pay rate, each mapped to its input, with notes on priority and smart defaults"
+  fit="natural"
+  caption="Design specs for engineers"
+/>
+
+### From rules to payroll
+
+Once configured, premium rules were automatically applied to qualifying worked hours. Timecards showed the resulting **shift type, pay rate and gross wage**, giving managers and payroll a clear breakdown to review before processing pay.
+
+<MediaContainer
+  src="/case-studies/premium-pay-rates/timecards-mobile.png"
+  alt="Three phone screens: an HR Assistant notification that timecards are pending, a weekly timecard list grouped by department with a +2 hour from scheduled flag, and a timecard being approved with Approve all for 5 auto-filled timecards"
+  fit="natural"
+  caption="Managers review and approve timecards, with variances from the schedule flagged."
+/>
+
+<MediaContainer
+  src="/case-studies/premium-pay-rates/payroll-wages.png"
+  alt="Payroll table of employees by day with daily wages, total hours and total wages, and weekly sums in the footer"
+  fit="natural"
+  caption="Approved hours land in payroll as wages, premiums included."
+/>
+
+## 5. Outcome
+
+Premium Pay Rates was gradually rolled out as a **beta, with customers onboarded by our Customer Success team**. During the pilot, scheduled labour cost accuracy increased from **85% to 98%**, giving managers a much closer estimate of what they would ultimately pay when payroll was processed.
+
+<Callout label="85% → 98%">
+
+Labour cost forecast accuracy during the beta
+
+</Callout>
+
+Our internal payroll specialist also reported a **significant reduction in manual work**. Premiums and bonuses that previously had to be calculated and added manually at the end of each payroll cycle were now automatically reflected in employees' pay.
+
+*I left Nory while the wider rollout was still underway, so I wasn't able to measure longer-term adoption or engagement.*

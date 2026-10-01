@@ -3,7 +3,7 @@ title: "JDS"
 publishedAt: "2026-09-29"
 summary: "An opinionated design system for AI agent and voice interfaces, installable through the shadcn CLI."
 image: "/jds-cover.png"
-order: 0
+order: 2
 tags: ["Design system", "AI", "Voice"]
 ---
 
@@ -16,13 +16,34 @@ tags: ["Design system", "AI", "Voice"]
 
 JDS is my design system for AI agent and voice products. It covers the general UI primitives plus the surfaces most systems skip: voice orbs, agent side panels, prompt inputs, tool calls, approvals, reasoning and live transcripts.
 
+## Why I built it
+
+Most of my recent work is AI agent and voice UX, and every project started from the same gap. General design systems cover buttons, forms and tables well, but an agent product lives in the states between them: listening, thinking, calling a tool, waiting for approval, streaming an answer. I kept rebuilding those surfaces from scratch, so I turned them into one system with opinions baked in.
+
+## How it's built
+
+JDS is built on Base UI for accessible primitives, with Tailwind for styling, Motion for micro-interactions and WebGL for the heavier orb styles. Every component takes the same set of states, so an orb, a side panel and a composer stay in sync inside one experience.
+
 It ships as source through a shadcn registry, so every component lands in your repo and stays yours to edit.
 
 ```bash
 pnpm dlx shadcn@latest add @jds/style @jds/prompt-input
 ```
 
-The docs site is the case study. Below are the main explorations.
+## The Studio
+
+The main value is the Studio. Instead of reading props in the docs, you design a voice agent, a side panel copilot or a chat surface visually: tweak it live, preview every state, then copy the code, or a short spec to hand to a teammate or a coding agent. "Build an experience" goes one step further and exports a whole app from one flow.
+
+<MediaContainer
+  src="/case-studies/jds/studio.png"
+  alt="The JDS Studio index: Build an experience, Voice orb with glass, liquid and particle styles, a voice call, an agent side panel and a prompt input"
+  fit="natural"
+  caption="Design visually, preview every state, then copy the code or a spec."
+/>
+
+[Open the Studio →](https://usejds.dev/studio)
+
+Below are the main pieces.
 
 ---
 

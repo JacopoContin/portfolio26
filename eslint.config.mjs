@@ -39,7 +39,7 @@ const eslintConfig = defineConfig([
     },
     // shadcn primitives and vendored magicui components own their styling.
     {
-        files: ['src/components/ui/**', 'src/components/magicui/**'],
+        files: ['src/components/ui/**', 'src/components/magicui/**', 'src/components/jds/**'],
         rules: {
             'shadcn/no-restyle': 'off',
             'shadcn/no-arbitrary-values': 'off',
@@ -60,9 +60,9 @@ const eslintConfig = defineConfig([
         files: ['src/app/**/opengraph-image.tsx'],
         rules: { 'shadcn/no-inline-styles': 'off' },
     },
-    // magicui animates through motion style values, which must stay inline.
+    // magicui and the JDS orb animate through style values, which must stay inline.
     {
-        files: ['src/components/magicui/**'],
+        files: ['src/components/magicui/**', 'src/components/jds/**'],
         rules: { 'shadcn/no-inline-styles': 'off' },
     },
     // Primitives forward renamed className props and call cva variants; the

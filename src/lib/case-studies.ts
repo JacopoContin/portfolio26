@@ -1,6 +1,9 @@
 import { allCaseStudies } from "content-collections";
 
-export const publishedCaseStudies = allCaseStudies.filter((study) => !study.draft);
+/** Drafts are hidden in production builds but readable in `next dev`. */
+const showDrafts = process.env.NODE_ENV === "development";
+
+export const publishedCaseStudies = allCaseStudies.filter((study) => showDrafts || !study.draft);
 
 /** List order: explicit `order` first (ascending), then newest first. */
 export const sortedCaseStudies = [...publishedCaseStudies].sort((a, b) => {
