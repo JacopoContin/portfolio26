@@ -5,6 +5,8 @@ import Link from "next/link";
 import type { Metadata } from "next";
 import { paginate, normalizePage } from "@/lib/pagination";
 import { ChevronRight, Sparkles } from "lucide-react";
+import type { ReactNode } from "react";
+import { VoiceOrb } from "@/components/jds/voice-orb";
 
 export const metadata: Metadata = {
   title: "Case Studies",
@@ -18,6 +20,11 @@ export const metadata: Metadata = {
     title: "Case Studies",
     description: "Selected product design work, written up end to end.",
   },
+};
+
+/** Live, theme-aware thumbnails that replace a study's cover image. */
+const previews: Record<string, ReactNode> = {
+  jds: <VoiceOrb variant="particles" size={56} />,
 };
 
 const PAGE_SIZE = 5;
@@ -69,7 +76,9 @@ export default async function CaseStudiesPage({
                       href={`/case-studies/${slug}`}
                     >
                       <div className="relative aspect-video w-28 shrink-0 overflow-hidden rounded-lg bg-muted ring-1 ring-border transition-shadow duration-300 group-hover:ring-foreground/20 sm:w-44">
-                        {study.image ? (
+                        {previews[slug] ? (
+                          <div className="flex size-full items-center justify-center">{previews[slug]}</div>
+                        ) : study.image ? (
                           <Image
                             src={study.image}
                             alt=""

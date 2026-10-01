@@ -5,7 +5,7 @@ import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
 import { ArrowUpRight } from "lucide-react";
 import Link from "next/link";
-import { useState } from "react";
+import { useState, type ReactNode } from "react";
 import Markdown from "react-markdown";
 
 function ProjectImage({ src, alt }: { src: string; alt: string }) {
@@ -34,6 +34,8 @@ interface Props {
   link?: string;
   image?: string;
   video?: string;
+  /** Live component shown in place of the image or video. */
+  preview?: ReactNode;
   links?: readonly {
     icon: React.ReactNode;
     type: string;
@@ -51,6 +53,7 @@ export function ProjectCard({
   link,
   image,
   video,
+  preview,
   links,
   className,
 }: Props) {
@@ -65,7 +68,9 @@ export function ProjectCard({
       )}
     >
       <div className="relative shrink-0">
-        {video ? (
+        {preview ? (
+          <div className="flex h-48 w-full items-center justify-center bg-muted">{preview}</div>
+        ) : video ? (
           <video
             src={video}
             autoPlay

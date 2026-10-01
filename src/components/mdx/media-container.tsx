@@ -1,6 +1,13 @@
 /* eslint-disable @next/next/no-img-element */
 
-import type { ReactNode } from "react";
+import type { CSSProperties, ReactNode } from "react";
+
+/** A numbered dot over an image, positioned in percent of its width and height. */
+interface Marker {
+  x: number;
+  y: number;
+  label: string;
+}
 
 interface MediaContainerProps {
   src: string;
@@ -19,6 +26,10 @@ interface MediaContainerProps {
   zoomable?: boolean;
   /** Silent looping playback, for product shots that should just run. */
   autoPlay?: boolean;
+  /** Videos only: frame shown before playback starts. */
+  poster?: string;
+  /** Images only: numbered dots over the image, explained in a legend below it. */
+  markers?: Marker[];
   caption?: string;
   className?: string;
 }
@@ -31,6 +42,8 @@ export function MediaContainer({
   crop = true,
   zoomable = true,
   autoPlay = false,
+  poster,
+  markers = [],
   caption,
   className = "",
 }: MediaContainerProps) {
@@ -40,10 +53,10 @@ export function MediaContainer({
   const frame = isPortrait
     ? "not-prose ring-4 ring-muted w-full max-w-xs mx-auto rounded-lg overflow-hidden"
     : isNatural
-    ? "not-prose ring-4 ring-muted w-full rounded-lg overflow-hidden"
-    : isThumb
-      ? "not-prose ring-4 ring-muted w-full aspect-4/3 rounded-lg overflow-hidden bg-card"
-      : "not-prose ring-4 ring-muted w-full h-75 rounded-lg overflow-hidden flex items-center justify-center";
+      ? "not-prose ring-4 ring-muted w-full rounded-lg overflow-hidden"
+      : isThumb
+        ? "not-prose ring-4 ring-muted w-full aspect-4/3 rounded-lg overflow-hidden bg-card"
+        : "not-prose ring-4 ring-muted w-full h-75 rounded-lg overflow-hidden flex items-center justify-center";
   const media = isNatural
     ? "w-full h-auto block"
     : isThumb && !crop
@@ -53,7 +66,7 @@ export function MediaContainer({
   const Frame = zoomable && type === "image" ? "a" : "div";
   const content = (
     <Frame
-      className={`${frame} ${Frame === "a" ? "cursor-zoom-in" : ""} ${className}`}
+      className={`${frame} relative ${Frame === "a" ? "cursor-zoom-in" : ""} ${className}`}
       {...(Frame === "a" && {
         href: src,
         target: "_blank",
@@ -62,10 +75,28 @@ export function MediaContainer({
       })}
     >
       {type === "image" ? (
-        <img src={src} alt={alt} className={media} />
+        <>
+          <img src={src} alt={alt} className={media} />
+          {markers.map((marker, i) => (
+            <span
+              key={marker.label}
+              aria-hidden
+              className="absolute left-(--x) top-(--y) flex size-6 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full bg-primary text-xs font-semibold text-primary-foreground shadow-md ring-2 ring-background"
+              style={
+                {
+                  "--x": `${marker.x}%`,
+                  "--y": `${marker.y}%`,
+                } as CSSProperties
+              }
+            >
+              {i + 1}
+            </span>
+          ))}
+        </>
       ) : (
         <video
           src={src}
+          poster={poster}
           className={media}
           controls
           {...(autoPlay && {
@@ -79,16 +110,34 @@ export function MediaContainer({
     </Frame>
   );
 
-  if (!caption) {
+  if (!caption && markers.length === 0) {
     return content;
   }
 
   return (
-    <figure className={isThumb ? "m-0 flex flex-col gap-3" : "my-6 flex flex-col gap-3"}>
+    <figure
+      className={
+        isThumb ? "m-0 flex flex-col gap-3" : "my-6 flex flex-col gap-3"
+      }
+    >
       {content}
-      <figcaption className="text-xs text-muted-foreground text-center text-balance m-0">
-        {caption}
-      </figcaption>
+      {markers.length > 0 && (
+        <ol className="not-prose m-0 flex list-none flex-col gap-2 p-0 text-sm text-muted-foreground">
+          {markers.map((marker, i) => (
+            <li key={marker.label} className="flex items-start gap-3">
+              <span className="flex size-5 shrink-0 items-center justify-center rounded-full bg-primary text-xs font-semibold text-primary-foreground">
+                {i + 1}
+              </span>
+              {marker.label}
+            </li>
+          ))}
+        </ol>
+      )}
+      {caption && (
+        <figcaption className="text-xs text-muted-foreground text-center text-balance m-0">
+          {caption}
+        </figcaption>
+      )}
     </figure>
   );
 }
@@ -110,5 +159,9 @@ export function MediaGrid({
   children: ReactNode;
   cols?: keyof typeof gridCols;
 }) {
-  return <div className={`not-prose my-6 grid gap-4 ${gridCols[cols]}`}>{children}</div>;
+  return (
+    <div className={`not-prose my-6 grid gap-4 ${gridCols[cols]}`}>
+      {children}
+    </div>
+  );
 }

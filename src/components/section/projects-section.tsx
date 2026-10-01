@@ -47,6 +47,7 @@ export default function ProjectsSection() {
                                 tags={project.technologies}
                                 image={project.image}
                                 video={project.video}
+                                preview={"preview" in project ? project.preview : undefined}
                                 links={project.links}
                             />
                         </BlurFade>

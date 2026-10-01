@@ -1,5 +1,6 @@
 import type { ComponentType, SVGProps } from "react";
 import { Icons } from "@/components/icons";
+import { VoiceOrb } from "@/components/jds/voice-orb";
 import { HomeIcon, NotebookIcon } from "lucide-react";
 import { ReactLight } from "@/components/ui/svgs/reactLight";
 import { NextjsIconDark } from "@/components/ui/svgs/nextjsIconDark";
@@ -249,6 +250,7 @@ export const DATA = {
       ],
       image: "/jds-cover.png",
       video: "",
+      preview: <VoiceOrb variant="particles" size={128} />,
     },
     {
       title: "Intelligent Scheduling",
@@ -280,6 +282,33 @@ export const DATA = {
       video: "",
     },
     {
+      title: "Premium Pay Rates",
+      hidden: false,
+      slug: "premium-pay-rates",
+      href: "/case-studies/premium-pay-rates",
+      dates: "2024",
+      active: true,
+      summary:
+        "Letting restaurant managers configure overtime, night, weekend and holiday premiums that flow from scheduling to timecards to payroll.",
+      description:
+        "Premium pay rules that restaurant managers configure once and that flow automatically from scheduling to timecards to payroll. In the beta, scheduled labour cost accuracy rose from 85% to 98%.",
+      technologies: [
+        "Product Design",
+        "Payroll",
+        "AI",
+        "Systems Design",
+      ],
+      links: [
+        {
+          type: "Case Study",
+          href: "/case-studies/premium-pay-rates",
+          icon: <Icons.globe className="size-3" />,
+        },
+      ],
+      image: "/case-studies/premium-pay-rates/rule-panel.png",
+      video: "",
+    },
+    {
       title: "Supplier Invoices",
       hidden: false,
       slug: "qonto-supplier-invoices",
@@ -306,27 +335,6 @@ export const DATA = {
         },
       ],
       image: "/qonto-cover.png",
-      video: "",
-    },
-    {
-      title: "Nory Pay",
-      hidden: true,
-      slug: "people-for-payroll",
-      href: "/case-studies/people-for-payroll",
-      dates: "2024",
-      active: true,
-      summary:
-        "Closing the loop between scheduled hours and what staff actually cost, once pensions, insurance and real payments are counted.",
-      description:
-        "Embedded payroll automation for hospitality operators. Closed the loop between scheduled hours, actual payments, pensions and insurance, turning the blind spot behind 'actual labour cost' into something managers could see and act on.",
-      technologies: [
-        "Product Design",
-        "Payroll",
-        "Compliance",
-        "Systems Design",
-      ],
-      links: [],
-      image: "/nory-pay-cover.png",
       video: "",
     },
     {
