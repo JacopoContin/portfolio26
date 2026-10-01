@@ -3,6 +3,7 @@ import { CodeBlock } from "@/components/mdx/code-block";
 import { Faq, FaqItem } from "@/components/mdx/faq";
 import { Quote } from "@/components/mdx/quote";
 import { MediaContainer, MediaGrid } from "@/components/mdx/media-container";
+import { SmartLink } from "@/components/smart-link";
 import { Children, isValidElement, type ComponentProps, type ReactNode } from "react";
 
 type CodeProps = ComponentProps<"code"> & {
@@ -25,6 +26,7 @@ export const mdxComponents = {
   Quote,
   MediaContainer,
   MediaGrid,
+  a: (props: ComponentProps<"a">) => <SmartLink {...props} />,
   pre: (props: ComponentProps<"pre">) => <CodeBlock {...props} />,
   hr: (props: ComponentProps<"hr">) => (
     <div className="my-10 flex w-full items-center" {...props}>

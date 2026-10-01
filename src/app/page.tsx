@@ -2,6 +2,7 @@
 import BlurFade from "@/components/magicui/blur-fade";
 import BlurFadeText from "@/components/magicui/blur-fade-text";
 import { AvatarOrb } from "@/components/avatar-orb";
+import { SmartLink } from "@/components/smart-link";
 import { DATA } from "@/data/resume";
 import Image from "next/image";
 import Link from "next/link";
@@ -70,19 +71,7 @@ export default function Page() {
             <div className="prose max-w-full text-pretty font-sans leading-relaxed text-muted-foreground dark:prose-invert">
               <Markdown
                 components={{
-                  a: ({ href, children }) => {
-                    const external = href?.startsWith("http");
-                    return (
-                      <a
-                        href={href}
-                        {...(external
-                          ? { target: "_blank", rel: "noopener noreferrer" }
-                          : {})}
-                      >
-                        {children}
-                      </a>
-                    );
-                  },
+                  a: ({ href, children }) => <SmartLink href={href}>{children}</SmartLink>,
                 }}
               >
                 {DATA.summary}
