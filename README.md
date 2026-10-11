@@ -1,47 +1,66 @@
-<div align="center">
-<img alt="Portfolio" src="https://github.com/dillionverma/portfolio/assets/16860528/57ffca81-3f0a-4425-b31d-094f61725455" width="90%">
-</div>
+# portfolio26
 
-# Portfolio [![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fdillionverma%2Fportfolio)
+Personal portfolio and case studies of Jacopo Contin, product designer and design engineer. Live at [jacopocontin.com](https://www.jacopocontin.com).
 
-Built with next.js, [shadcn/ui](https://ui.shadcn.com/), and [magic ui](https://magicui.design/), deployed on Vercel.
+## Stack
 
-# Features
+- Next.js 16 (App Router), React 19, TypeScript
+- Tailwind CSS v4, shadcn/ui, Magic UI
+- Motion for animation
+- Content Collections + MDX for case studies, Shiki for code highlighting
+- `@shadcn/lint` on top of ESLint
+- Deployed on Vercel
 
-- Setup only takes a few minutes by editing the [single config file](./src/data/resume.tsx)
-- Built using Next.js 14, React, Typescript, Shadcn/UI, TailwindCSS, Framer Motion, Magic UI
-- Includes a blog
-- Responsive for different devices
-- Optimized for Next.js and Vercel
+## Getting started
 
-# Getting Started Locally
+```bash
+pnpm install
+pnpm dev
+```
 
-1. Clone this repository to your local machine:
+Open [localhost:3000](http://localhost:3000).
 
-   ```bash
-   git clone https://github.com/dillionverma/portfolio
-   ```
+## Scripts
 
-2. Move to the cloned directory
+| Command         | Description                 |
+| --------------- | --------------------------- |
+| `pnpm dev`      | Start the dev server        |
+| `pnpm build`    | Production build            |
+| `pnpm start`    | Serve the production build  |
+| `pnpm lint`     | Run ESLint and shadcn lint  |
+| `pnpm lint:fix` | Auto-fix lint issues        |
 
-   ```bash
-   cd portfolio
-   ```
+## Project structure
 
-3. Install dependencies:
+```
+content/            Case studies as MDX files
+public/             Images, covers and case study assets
+src/app/            Routes (home, case studies, OG image, icons)
+src/components/     Feature components, shadcn primitives in ui/
+src/data/resume.tsx Profile, links, work history, education
+src/lib/            Case study loading, pagination, MDX helpers
+```
 
-   ```bash
-   pnpm install
-   ```
+## Editing content
 
-4. Start the local Server:
+- **Profile, work and links:** edit `src/data/resume.tsx`.
+- **New case study:** add an `.mdx` file to `content/` with this frontmatter, and put its assets in `public/case-studies/<slug>/`.
 
-   ```bash
-   pnpm dev
-   ```
+```yaml
+---
+title: "JDS"
+publishedAt: "2026-09-29"
+summary: "One sentence describing the product."
+image: "/jds-cover.png"
+order: 2
+tags: ["Design system", "AI"]
+---
+```
 
-5. Open the [Config file](./src/data/resume.tsx) and make changes
+- The file name becomes the URL slug (`content/jds.mdx` → `/case-studies/jds`).
+- `order` is optional: lower numbers come first, and unordered studies follow, newest first.
+- Add `draft: true` to hide a study in production. Drafts still show in `pnpm dev`.
 
-# License
+## Credits
 
-Licensed under the [MIT license](https://github.com/dillionverma/portfolio/blob/main/LICENSE.md).
+Based on [dillionverma/portfolio](https://github.com/dillionverma/portfolio) by Dillion Verma, licensed under MIT. See [LICENSE](./LICENSE).
