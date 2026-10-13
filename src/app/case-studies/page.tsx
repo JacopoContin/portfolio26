@@ -4,7 +4,8 @@ import Image from "next/image";
 import Link from "next/link";
 import type { Metadata } from "next";
 import { paginate, normalizePage } from "@/lib/pagination";
-import { ChevronRight, Sparkles } from "lucide-react";
+import { ArrowUpRight, ChevronRight, Sparkles } from "lucide-react";
+import { sideProjects } from "@/lib/side-projects";
 import type { ReactNode } from "react";
 import { VoiceOrb } from "@/components/jds/voice-orb";
 
@@ -174,6 +175,78 @@ export default async function CaseStudiesPage({
             <p className="text-muted-foreground text-center">
               No case studies yet. Check back soon!
             </p>
+          </div>
+        </BlurFade>
+      )}
+
+      {sideProjects.length > 0 && (
+        <BlurFade delay={BLUR_FADE_DELAY * 5}>
+          <div className="mt-16">
+            <h2 className="text-xl font-semibold tracking-tight mb-2">
+              Side projects
+              <span className="ml-2 bg-card border border-border rounded-md px-2 py-1 text-muted-foreground text-sm font-normal">
+                {sideProjects.length} {sideProjects.length === 1 ? "project" : "projects"}
+              </span>
+            </h2>
+            <p className="text-sm text-muted-foreground mb-8">Small things I built for myself. Live, no write-up.</p>
+            <div className="flex flex-col gap-6">
+              {sideProjects.map((project) => (
+                <a
+                  key={project.href}
+                  className="group -m-3 flex items-start gap-4 rounded-xl p-3 transition-colors duration-300 hover:bg-accent/50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+                  href={project.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <div className="relative aspect-video w-28 shrink-0 overflow-hidden rounded-lg bg-muted ring-1 ring-border transition-shadow duration-300 group-hover:ring-foreground/20 sm:w-44">
+                    {project.image ? (
+                      <Image
+                        src={project.image}
+                        alt=""
+                        fill
+                        sizes="(min-width: 640px) 176px, 112px"
+                        className="object-cover object-left-top transition-all duration-700 ease-out group-hover:scale-105 dark:brightness-90 dark:group-hover:brightness-100"
+                      />
+                    ) : (
+                      <span className="flex h-full items-center justify-center text-2xl font-semibold text-muted-foreground">
+                        {project.title.charAt(0)}
+                      </span>
+                    )}
+                  </div>
+                  <div className="flex min-w-0 flex-1 flex-col gap-1">
+                    <div className="flex flex-col gap-0.5 sm:flex-row sm:items-baseline sm:justify-between sm:gap-3">
+                      <p className="text-lg font-medium tracking-tight">
+                        {project.title}
+                        <ArrowUpRight
+                          className="ml-1 inline-block size-4 stroke-3 text-muted-foreground opacity-0 -translate-x-1 translate-y-1 transition-all duration-200 group-hover:translate-x-0 group-hover:translate-y-0 group-hover:opacity-100"
+                          aria-hidden
+                        />
+                      </p>
+                      <span className="order-first text-xs tabular-nums text-muted-foreground sm:order-none sm:shrink-0">
+                        <span className="font-mono">Side project</span>
+                        <span aria-hidden> · </span>
+                        {project.year}
+                      </span>
+                    </div>
+                    <p className="line-clamp-2 text-sm leading-relaxed text-pretty text-muted-foreground">
+                      {project.summary}
+                    </p>
+                    {project.tags && project.tags.length > 0 && (
+                      <ul className="mt-1 flex flex-wrap gap-1.5" aria-label="Tags">
+                        {project.tags.map((tag) => (
+                          <li
+                            key={tag}
+                            className="inline-flex items-center gap-1 rounded-md border border-border px-1.5 py-0.5 text-xs text-muted-foreground"
+                          >
+                            {tag}
+                          </li>
+                        ))}
+                      </ul>
+                    )}
+                  </div>
+                </a>
+              ))}
+            </div>
           </div>
         </BlurFade>
       )}
