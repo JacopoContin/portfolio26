@@ -3,9 +3,9 @@ import { sortedCaseStudies } from "@/lib/case-studies";
 import Image from "next/image";
 import Link from "next/link";
 import type { Metadata } from "next";
-import { paginate, normalizePage } from "@/lib/pagination";
 import { ArrowUpRight, ChevronRight, Sparkles } from "lucide-react";
 import { sideProjects } from "@/lib/side-projects";
+import { companyLogos } from "@/lib/companies";
 import type { ReactNode } from "react";
 import { VoiceOrb } from "@/components/jds/voice-orb";
 
@@ -28,7 +28,6 @@ const previews: Record<string, ReactNode> = {
   jds: <VoiceOrb variant="particles" size={56} />,
 };
 
-const PAGE_SIZE = 5;
 const BLUR_FADE_DELAY = 0.04;
 
 function formatListDate(date: string) {
@@ -39,21 +38,7 @@ function formatListDate(date: string) {
   });
 }
 
-export default async function CaseStudiesPage({
-  searchParams,
-}: {
-  searchParams: Promise<{ page?: string }>;
-}) {
-  const { page: pageParam } = await searchParams;
-
-
-  const totalPages = Math.ceil(sortedCaseStudies.length / PAGE_SIZE);
-  const currentPage = normalizePage(pageParam, totalPages);
-  const { items: paginatedCaseStudies, pagination } = paginate(sortedCaseStudies, {
-    page: currentPage,
-    pageSize: PAGE_SIZE,
-  });
-
+export default function CaseStudiesPage() {
   return (
     <section id="case-studies">
       <BlurFade delay={BLUR_FADE_DELAY}>
@@ -63,13 +48,13 @@ export default async function CaseStudiesPage({
         </p>
       </BlurFade>
 
-      {paginatedCaseStudies.length > 0 ? (
+      {sortedCaseStudies.length > 0 ? (
         <>
           <BlurFade delay={BLUR_FADE_DELAY * 2}>
             <div className="flex flex-col gap-6">
-              {paginatedCaseStudies.map((study, id) => {
+              {sortedCaseStudies.map((study, id) => {
                 const slug = study._meta.path.replace(/\.mdx$/, "");
-                const indexNumber = (pagination.page - 1) * PAGE_SIZE + id + 1;
+                const indexNumber = id + 1;
                 return (
                   <BlurFade delay={BLUR_FADE_DELAY * 3 + id * 0.05} key={slug}>
                     <Link
@@ -111,9 +96,22 @@ export default async function CaseStudiesPage({
                         <p className="line-clamp-2 text-sm leading-relaxed text-pretty text-muted-foreground">
                           {study.summary}
                         </p>
-                        {study.tags && study.tags.length > 0 && (
+                        {(study.companies?.length || study.tags?.length) ? (
                           <ul className="mt-1 flex flex-wrap gap-1.5" aria-label="Tags">
-                            {study.tags.map((tag) => (
+                            {study.companies?.map((company) => (
+                              <li
+                                key={company}
+                                className="inline-flex items-center gap-1.5 rounded-md border border-border py-0.5 pl-0.5 pr-1.5 text-xs font-medium text-foreground"
+                              >
+                                {companyLogos[company] && (
+                                  <span className="relative size-4 shrink-0 overflow-hidden rounded-sm bg-logo-surface">
+                                    <Image src={companyLogos[company]} alt="" fill sizes="16px" className="object-contain" />
+                                  </span>
+                                )}
+                                {company}
+                              </li>
+                            ))}
+                            {study.tags?.map((tag) => (
                               <li
                                 key={tag}
                                 className="inline-flex items-center gap-1 rounded-md border border-border px-1.5 py-0.5 text-xs text-muted-foreground"
@@ -123,7 +121,7 @@ export default async function CaseStudiesPage({
                               </li>
                             ))}
                           </ul>
-                        )}
+                        ) : null}
                       </div>
                     </Link>
                   </BlurFade>
@@ -131,43 +129,6 @@ export default async function CaseStudiesPage({
               })}
             </div>
           </BlurFade>
-
-          {/* Pagination Controls */}
-          {pagination.totalPages > 1 && (
-            <BlurFade delay={BLUR_FADE_DELAY * 4}>
-              <div className="flex gap-3 flex-row items-center justify-between mt-8">
-                <div className="text-sm text-muted-foreground">
-                  Page {pagination.page} of {pagination.totalPages}
-                </div>
-                <div className="flex gap-2 sm:justify-end">
-                  {pagination.hasPreviousPage ? (
-                    <Link
-                      href={`/case-studies?page=${pagination.page - 1}`}
-                      className="h-8 w-fit px-2 flex items-center justify-center text-sm border border-border rounded-lg hover:bg-accent/50 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
-                    >
-                      Previous
-                    </Link>
-                  ) : (
-                    <span className="h-8 w-fit px-2 flex items-center justify-center text-sm border border-border rounded-lg opacity-50 cursor-not-allowed">
-                      Previous
-                    </span>
-                  )}
-                  {pagination.hasNextPage ? (
-                    <Link
-                      href={`/case-studies?page=${pagination.page + 1}`}
-                      className="h-8 w-fit px-2 flex items-center justify-center text-sm border border-border rounded-lg hover:bg-accent/50 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
-                    >
-                      Next
-                    </Link>
-                  ) : (
-                    <span className="h-8 w-fit px-2 flex items-center justify-center text-sm border border-border rounded-lg opacity-50 cursor-not-allowed">
-                      Next
-                    </span>
-                  )}
-                </div>
-              </div>
-            </BlurFade>
-          )}
         </>
       ) : (
         <BlurFade delay={BLUR_FADE_DELAY * 2}>
