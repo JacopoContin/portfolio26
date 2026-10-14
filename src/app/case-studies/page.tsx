@@ -5,7 +5,6 @@ import Link from "next/link";
 import type { Metadata } from "next";
 import { ArrowUpRight, ChevronRight, Sparkles } from "lucide-react";
 import { sideProjects } from "@/lib/side-projects";
-import { companyLogos } from "@/lib/companies";
 import type { ReactNode } from "react";
 import { VoiceOrb } from "@/components/jds/voice-orb";
 
@@ -101,13 +100,8 @@ export default function CaseStudiesPage() {
                             {study.companies?.map((company) => (
                               <li
                                 key={company}
-                                className="inline-flex items-center gap-1.5 rounded-md border border-border py-0.5 pl-0.5 pr-1.5 text-xs font-medium text-foreground"
+                                className="inline-flex items-center rounded-md border border-transparent bg-secondary px-1.5 py-0.5 text-xs font-medium text-secondary-foreground"
                               >
-                                {companyLogos[company] && (
-                                  <span className="relative size-4 shrink-0 overflow-hidden rounded-sm bg-logo-surface">
-                                    <Image src={companyLogos[company]} alt="" fill sizes="16px" className="object-contain" />
-                                  </span>
-                                )}
                                 {company}
                               </li>
                             ))}
