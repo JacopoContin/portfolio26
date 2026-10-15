@@ -19,6 +19,8 @@ const caseStudies = defineCollection({
         /** Manual position on the list page; lower comes first, unset sorts by date after. */
         order: z.number().optional(),
         tags: z.array(z.string()).optional(),
+        /** Company names, shown as a badge before the tags on the list page. */
+        companies: z.array(z.string()).optional(),
         content: z.string(),
     }),
     transform: async (document, context) => {

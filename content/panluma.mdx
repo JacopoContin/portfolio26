@@ -1,10 +1,134 @@
 ---
 title: "Panluma"
 publishedAt: "2026-05-01"
-summary: "Live experiments in instructing, understanding and correcting AI systems that can take action, built as working prototypes rather than mockups."
-draft: true
+summary: "Designing an AI-native project management experience directly in code."
+image: "/case-studies/panluma/companion-text.jpg"
+order: 1
+tags: ["AI", "Agents", "Design Engineer", "B2B SaaS"]
+companies: ["Panluma"]
 ---
 
-An agent that can act on your behalf breaks most of the interface conventions we rely on. There is no obvious place to see what it understood, no natural moment to correct it, and no established shape for asking permission.
+| | |
+| --- | --- |
+| Company | Panluma |
+| Timeline | ~6 weeks |
+| Role | Product Designer & Builder |
+| Team | Me and the CEO/Founder |
+| Scope | Product strategy, UX, prototyping, frontend |
 
-These are working prototypes rather than mockups, because this is the kind of problem you cannot evaluate from a static screen.
+<Callout label="TL;DR">
+
+Panluma is a pre-seed, AI-native platform for founder-led agencies. In ~6 weeks I designed and built in code **two ways to delegate to an agent: chat and voice**. In both, the agent works on the page in front of you, so you can see, stop and steer it.
+
+<MediaContainer
+  src="/case-studies/panluma/companion-voice.mp4"
+  poster="/case-studies/panluma/companion-voice.jpg"
+  alt="A voice session: Sam asks PanLuma out loud to set up the Trailmix launch, tool calls appear beside the transcript, the agent fills the Work table, moves a deadline, drafts an update to Priya and sends it after Sam says send it"
+  type="video"
+  fit="natural"
+  autoPlay
+  caption="Voice: from a spoken request to a staffed project and a client update, all on screen."
+/>
+
+</Callout>
+
+---
+
+## 01. Context
+
+Panluma brings projects, CRM, finance and operations into one agentic app. The question: **what does business software look like when an agent is the primary interface?**
+
+The user is "Solo Sam", founder of a 1 to 50 person software agency juggling delivery, clients and finance across disconnected tools. I owned **product strategy, IA and agent interaction design**, prototyping directly in code.
+
+---
+
+## 02. First prompt
+
+The first prompt was generic: **the agent knew nothing about Sam or the business.**
+
+A one-minute onboarding fixed that: **LinkedIn → company context → connect tools → import data**. Now the home opens on Sam's day.
+
+<MediaContainer
+  src="/case-studies/panluma/first-prompt-context.png"
+  alt="PanLuma home greeting with 'Northwind review at 11, Trailmix wireframes are a day late', a suggestion to paste the Trailmix brief from Slack, and the composer with voice, model, workspace context and module scope"
+  fit="natural"
+  caption="With context: the home opens on Sam's day and suggests the next move."
+/>
+
+---
+
+## 03. Delegating without losing sight
+
+<Callout label="Problem">
+
+Hand work to an agent, especially by voice, and you lose sight of it. It says "on it" and the work happens somewhere you can't see.
+
+</Callout>
+
+Both patterns share one principle: **the agent works in your interface, where you can watch it.** They run the same flow:
+
+1. **Import the project from Slack.** Sam pastes the brief or says "set up the Trailmix launch". The agent checks team load and proposes six tasks with owners and estimates.
+2. **Create the project and tasks.** After approval, the agent takes over the Work page: a glowing border, a status bar, rows filling in one by one.
+3. **Modify.** "Maya needs more time on the wireframes." The agent highlights the cell and moves the date, checking nothing downstream slips.
+4. **Update the client.** It drafts the reply in Priya's Inbox thread. Nothing is sent without approval of the exact text.
+
+**Take back** returns the page to Sam at any step.
+
+---
+
+## 04. Pattern 1: Chat
+
+The handover is an **approval card**: "I'll take over the Work page to create the project and its 6 tasks. You can take it back at any time."
+
+Then the conversation **moves to a side panel**, listing each step as it runs. Owners and estimates land marked **Suggested**, so Sam knows what to check. Follow-up chips keep the next move one tap away.
+
+<MediaContainer
+  src="/case-studies/panluma/companion-text.mp4"
+  poster="/case-studies/panluma/companion-text.jpg"
+  alt="Sam pastes a Slack brief into the chat, PanLuma proposes a six-task plan, and after approval takes over the Work page, filling in owners, dates and estimates row by row, then moves a deadline and drafts a reply to Priya in the Inbox"
+  type="video"
+  fit="natural"
+  autoPlay
+  caption="Chat: Slack brief → project and tasks → moved deadline → client update."
+/>
+
+---
+
+## 05. Pattern 2: Voice
+
+Voice has nothing to read, so every **tool call appears as an action beside the live transcript**, with its status.
+
+<MediaContainer
+  src="/case-studies/panluma/voice-agent.png"
+  alt="PanLuma voice mode: a green waveform while the agent speaks, an Actions list with slack.read_message, team.workload and work.plan_project marked Done, and the live transcript beside it"
+  fit="natural"
+  caption="Voice mode: tool calls listed as actions next to the live transcript."
+/>
+
+When the agent takes over a page, voice shrinks into the side panel. Sam approves by saying **"send it"** or with a tap. When the session ends, **the transcript and its tool calls move into the chat**: one record across voice and text.
+
+<MediaContainer
+  src="/case-studies/panluma/companion-voice.mp4"
+  poster="/case-studies/panluma/companion-voice.jpg"
+  alt="A voice session: Sam asks PanLuma out loud to set up the Trailmix launch, tool calls appear beside the transcript, the agent fills the Work table, moves a deadline, drafts an update to Priya and sends it after Sam says send it"
+  type="video"
+  fit="natural"
+  autoPlay
+  caption='Voice: the same flow, the same page, approved by saying "send it".'
+/>
+
+---
+
+## 06. Making the agent's work legible
+
+<Callout label="Principle">
+
+Visibility doesn't limit autonomy. **You delegate more when you can see what the agent did, is doing and will do next.**
+
+</Callout>
+
+- **Active row and field states** show exactly where the agent is working.
+- **Suggested vs pending values** separate AI guesses from data still to come.
+- **Stable layouts** keep the page from shifting while the agent writes into it.
+- **Separate task and agent statuses** avoid confusing AI activity with task progress.
+- **Reduced-motion support** keeps every state readable without the animated border.
