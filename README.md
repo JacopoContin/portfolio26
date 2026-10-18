@@ -34,6 +34,7 @@ Open [localhost:3000](http://localhost:3000).
 
 ```
 content/            Case studies as MDX files
+knowledge/          Extra markdown notes for the Ask AI panel
 public/             Images, covers and case study assets
 src/app/            Routes (home, case studies, OG image, icons)
 src/components/     Feature components, shadcn primitives in ui/
@@ -60,6 +61,14 @@ tags: ["Design system", "AI"]
 - The file name becomes the URL slug (`content/jds.mdx` → `/case-studies/jds`).
 - `order` is optional: lower numbers come first, and unordered studies follow, newest first.
 - Add `draft: true` to hide a study in production. Drafts still show in `pnpm dev`.
+
+## Ask AI panel
+
+Highlight any text on the site and an **Ask about this** chip appears. Clicking it opens a chat sidepanel with the passage attached. The asterisk in the dock opens the same panel.
+
+- **Knowledge:** the profile in `src/data/resume.tsx`, every published case study, and any `.md` file in `knowledge/`. Drop new markdown files there, one topic per file, with an optional `title` frontmatter.
+- **Model:** any OpenAI-compatible chat API, called from `src/app/api/chat/route.ts`. By default it uses the Gemini free tier. Copy `.env.example` to `.env.local` and set `LLM_API_KEY` (get one at [aistudio.google.com/apikey](https://aistudio.google.com/apikey)). On Vercel, add the same variables under Project Settings → Environment Variables.
+- **Limits:** 10 questions per minute per visitor, the last 12 messages, and 800 output tokens per answer.
 
 ## Credits
 

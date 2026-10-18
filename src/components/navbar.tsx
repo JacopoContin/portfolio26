@@ -10,6 +10,7 @@ import {
 import { VinylPlayer } from "@/components/vinyl-player";
 import { DATA } from "@/data/resume";
 import { SmartLink } from "@/components/smart-link";
+import { AskDockButton } from "@/components/ask/ask-dock-button";
 
 export default function Navbar() {
   return (
@@ -73,6 +74,19 @@ export default function Navbar() {
           orientation="vertical"
           className="h-2/3 m-auto w-px bg-border"
         />
+        <Tooltip>
+          <TooltipTrigger asChild>
+            <AskDockButton />
+          </TooltipTrigger>
+          <TooltipContent
+            side="top"
+            sideOffset={8}
+            className="rounded-xl bg-primary text-primary-foreground px-4 py-2 text-sm shadow-[0_10px_40px_-10px_rgba(0,0,0,0.3)] dark:shadow-[0_10px_40px_-10px_rgba(0,0,0,0.5)]"
+          >
+            <p>Ask AI about me</p>
+            <TooltipArrow className="fill-primary" />
+          </TooltipContent>
+        </Tooltip>
         <Tooltip>
           <TooltipTrigger asChild>
             <DockIcon className="rounded-3xl cursor-pointer size-full bg-background p-0 backdrop-blur-3xl border border-border transition-colors">

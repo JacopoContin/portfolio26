@@ -10,6 +10,9 @@ import { GeistMono } from "geist/font/mono";
 import { GeistSans } from "geist/font/sans";
 import "./globals.css";
 import { FlickeringGrid } from "@/components/magicui/flickering-grid";
+import { AskProvider } from "@/components/ask/ask-provider";
+import { AskPanel } from "@/components/ask/ask-panel";
+import { AskSelectionChip } from "@/components/ask/ask-selection-chip";
 
 export const metadata: Metadata = {
   metadataBase: new URL(DATA.url),
@@ -63,23 +66,27 @@ export default function RootLayout({
       >
         <ThemeProvider attribute="class" defaultTheme="light">
           <TooltipProvider delayDuration={0}>
-            <div className="absolute inset-0 top-0 left-0 right-0 h-[100px] overflow-hidden z-0">
-              <FlickeringGrid
-                className="h-full w-full"
-                squareSize={2}
-                gridGap={2}
-                accentColors={["var(--grid-accent-1)", "var(--grid-accent-2)", "var(--grid-accent-3)", "var(--grid-accent-4)", "var(--grid-accent-5)"]}
-                accentChance={0.12}
-                style={{
-                  maskImage: "linear-gradient(to bottom, black, transparent)",
-                  WebkitMaskImage: "linear-gradient(to bottom, black, transparent)",
-                }}
-              />
-            </div>
-            <div className="relative z-10 max-w-2xl mx-auto py-12 pb-24 sm:py-24 px-6">
-              {children}
-            </div>
-            <Navbar />
+            <AskProvider>
+              <div className="absolute inset-0 top-0 left-0 right-0 h-[100px] overflow-hidden z-0">
+                <FlickeringGrid
+                  className="h-full w-full"
+                  squareSize={2}
+                  gridGap={2}
+                  accentColors={["var(--grid-accent-1)", "var(--grid-accent-2)", "var(--grid-accent-3)", "var(--grid-accent-4)", "var(--grid-accent-5)"]}
+                  accentChance={0.12}
+                  style={{
+                    maskImage: "linear-gradient(to bottom, black, transparent)",
+                    WebkitMaskImage: "linear-gradient(to bottom, black, transparent)",
+                  }}
+                />
+              </div>
+              <div className="relative z-10 max-w-2xl mx-auto py-12 pb-24 sm:py-24 px-6">
+                {children}
+              </div>
+              <Navbar />
+              <AskSelectionChip />
+              <AskPanel />
+            </AskProvider>
           </TooltipProvider>
         </ThemeProvider>
       </body>
