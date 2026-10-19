@@ -156,12 +156,14 @@ export const DATA = {
     },
   ],
   music: {
+    // The record shelf. Paste any Spotify album, track or playlist link;
+    // the sleeve art is pulled from Spotify at build time.
     onRepeat: [
-      { trackId: "67WC3ZMEQDCvIEVIC0u2Gv", artist: "Dennis Brown", track: "Love Has Found Its Way" },
-      { trackId: "0SQKjRQ1vaYEaMOtRzvbiO", artist: "Charlie Jeer", track: "Sun Is Gone" },
-      { trackId: "3ELZG2YLGrwCVesooFyF4e", artist: "Gotts Street Park", track: "Everything" },
-      { trackId: "4aYQmVzzYIB5mgFqCl2hpQ", artist: "TOPS", track: "Anything" },
-      { trackId: "1SIXMGcsAeA6sNxaY1EG3O", artist: "Nu Genea", track: "Tienaté" },
+      { url: "https://open.spotify.com/track/2MIavWMdvbYuRoA2Cw6VkN", artist: "Khruangbin", title: "August 10" },
+      { url: "https://open.spotify.com/track/6Dk5fHTvH897XrVzCO64Mx", artist: "Bobby Caldwell", title: "What You Won't Do for Love" },
+      { url: "https://open.spotify.com/track/6Qb7gtV6Q4MnUjSbkFcopl", artist: "Paul Simon", title: "50 Ways to Leave Your Lover" },
+      { url: "https://open.spotify.com/track/4Goj7amQLl2PiPYaiB0VlV", artist: "Tom Misch & Yussef Dayes", title: "Tidal Wave" },
+      { url: "https://open.spotify.com/track/19kHhX6f6EfLU7rcO3RqjO", artist: "Jungle", title: "Back On 74" },
     ],
     sessions: [
       {
