@@ -20,7 +20,7 @@ const eslintConfig = defineConfig([
             'shadcn/no-raw-colors': 'error',
             'shadcn/no-unknown-classes': [
                 'error',
-                // Vinyl player classes are defined in src/app/globals.css.
+                // Vinyl player and record shelf classes are defined in src/app/globals.css.
                 {
                     allow: [
                         'not-prose',
@@ -28,6 +28,20 @@ const eslintConfig = defineConfig([
                         'vinyl-record',
                         'vinyl-label',
                         'vinyl-tonearm',
+                        'shelf',
+                        'sleeve-record',
+                        'turntable',
+                        'turntable-platter',
+                        'turntable-disc',
+                        'turntable-record',
+                        'turntable-label',
+                        'turntable-sheen',
+                        'turntable-arm',
+                        'turntable-arm-swing',
+                        'turntable-start',
+                        'turntable-key',
+                        'turntable-led',
+                        'turntable-glyph',
                     ],
                 },
             ],
