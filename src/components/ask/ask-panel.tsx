@@ -225,9 +225,6 @@ export function AskPanel() {
                 )}
               </div>
             </div>
-            <p className="mt-2 px-1 text-xs text-muted-foreground">
-              AI answers from {firstName}&apos;s portfolio and can be wrong.
-            </p>
           </form>
         </motion.aside>
       )}
