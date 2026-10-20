@@ -757,6 +757,13 @@ body,
   }
 }
 
+/* On phones the panel covers the screen, so the page behind it shouldn't scroll. */
+@media (max-width: 39.99rem) {
+  html[data-ask-open] {
+    overflow: hidden;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   body,
   .ask-push-fixed {

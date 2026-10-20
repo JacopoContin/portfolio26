@@ -84,8 +84,9 @@ export function AskPanel() {
   const inputRef = useRef<HTMLTextAreaElement>(null);
   const scrollRef = useRef<HTMLDivElement>(null);
 
+  // On touch screens focusing pops the keyboard over the panel before the visitor has seen it, so only focus with a mouse.
   useEffect(() => {
-    if (open) inputRef.current?.focus();
+    if (open && window.matchMedia("(pointer: fine)").matches) inputRef.current?.focus();
   }, [open, quote]);
 
   useEffect(() => {
@@ -159,7 +160,7 @@ export function AskPanel() {
             </button>
           </header>
 
-          <div ref={scrollRef} className="flex-1 overflow-y-auto px-4 py-4" aria-live="polite">
+          <div ref={scrollRef} className="flex-1 overflow-y-auto overscroll-contain px-4 py-4" aria-live="polite">
             {messages.length === 0 ? (
               <div className="flex h-full flex-col justify-end gap-4">
                 <div className="space-y-1">
@@ -202,7 +203,7 @@ export function AskPanel() {
                   rows={1}
                   maxLength={2000}
                   placeholder={quote ? "What would you like to know about this?" : "Ask a question…"}
-                  className="field-sizing-content max-h-40 min-h-8 flex-1 resize-none bg-transparent px-1.5 py-1 text-sm outline-none placeholder:text-muted-foreground"
+                  className="field-sizing-content max-h-40 min-h-8 flex-1 resize-none bg-transparent px-1.5 py-1 text-base outline-none sm:text-sm placeholder:text-muted-foreground"
                 />
                 {streaming ? (
                   <button
