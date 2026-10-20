@@ -2,6 +2,7 @@
 "use client";
 
 import { Badge } from "@/components/ui/badge";
+import { darkVariant } from "@/lib/dark-image";
 import { cn } from "@/lib/utils";
 import { ArrowUpRight } from "lucide-react";
 import Link from "next/link";
@@ -15,13 +16,19 @@ function ProjectImage({ src, alt }: { src: string; alt: string }) {
     return <div className="w-full h-48 bg-muted" />;
   }
 
+  const darkSrc = darkVariant(src);
   return (
-    <img
-      src={src}
-      alt={alt}
-      className="w-full h-48 object-cover"
-      onError={() => setImageError(true)}
-    />
+    <>
+      <img
+        src={src}
+        alt={alt}
+        className={cn("w-full h-48 object-cover", darkSrc && "dark:hidden")}
+        onError={() => setImageError(true)}
+      />
+      {darkSrc && (
+        <img src={darkSrc} alt={alt} className="hidden w-full h-48 object-cover dark:block" loading="lazy" />
+      )}
+    </>
   );
 }
 

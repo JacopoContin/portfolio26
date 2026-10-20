@@ -9,6 +9,7 @@ import {
 } from "@/components/ui/accordion";
 import { DATA } from "@/data/resume";
 import { ChevronDown, ChevronRight } from "lucide-react";
+import { darkVariant } from "@/lib/dark-image";
 import { cn } from "@/lib/utils";
 
 function LogoImage({ src, alt }: { src: string; alt: string }) {
@@ -20,16 +21,21 @@ function LogoImage({ src, alt }: { src: string; alt: string }) {
     );
   }
 
+  const darkSrc = darkVariant(src);
+  const className = cn(
+    "size-8 md:size-10 border rounded-full shadow ring-2 ring-border overflow-hidden flex-none",
+    src === "/me.png" ? "object-cover" : "p-1 object-contain"
+  );
   return (
-    <img
-      src={src}
-      alt={alt}
-      className={cn(
-        "size-8 md:size-10 border rounded-full shadow ring-2 ring-border overflow-hidden flex-none",
-        src === "/me.png" ? "object-cover" : "p-1 object-contain"
-      )}
-      onError={() => setImageError(true)}
-    />
+    <>
+      <img
+        src={src}
+        alt={alt}
+        className={cn(className, darkSrc && "dark:hidden")}
+        onError={() => setImageError(true)}
+      />
+      {darkSrc && <img src={darkSrc} alt={alt} className={cn(className, "hidden dark:block")} loading="lazy" />}
+    </>
   );
 }
 
