@@ -1,6 +1,6 @@
 "use client";
 
-import { createContext, useCallback, useContext, useMemo, useRef, useState, type ReactNode } from "react";
+import { createContext, useCallback, useContext, useEffect, useMemo, useRef, useState, type ReactNode } from "react";
 
 export type AskMessage = {
   id: string;
@@ -41,6 +41,11 @@ export function AskProvider({ children }: { children: ReactNode }) {
   const [messages, setMessages] = useState<AskMessage[]>([]);
   const [streaming, setStreaming] = useState(false);
   const abortRef = useRef<AbortController | null>(null);
+
+  // The page makes room for the panel through CSS keyed on this attribute (see globals.css).
+  useEffect(() => {
+    document.documentElement.toggleAttribute("data-ask-open", open);
+  }, [open]);
 
   const askAbout = useCallback((text: string) => {
     setQuote(text);

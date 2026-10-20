@@ -131,7 +131,7 @@ export function AskPanel() {
           initial={{ x: "100%" }}
           animate={{ x: 0 }}
           exit={{ x: "100%" }}
-          transition={{ type: "spring", damping: 32, stiffness: 320 }}
+          transition={{ duration: 0.35, ease: [0.32, 0.72, 0, 1] }}
           className="fixed inset-y-0 right-0 z-50 flex w-full flex-col border-l bg-card shadow-[0_0_40px_-10px_rgba(0,0,0,0.25)] sm:w-100"
         >
           <header className="flex items-center gap-2 border-b px-4 py-3">
