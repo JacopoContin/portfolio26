@@ -106,8 +106,14 @@ export function AskProvider({ children }: { children: ReactNode }) {
           update({ content: "Couldn't reach the assistant. Check your connection and try again.", error: true });
         }
       } finally {
-        // An aborted or empty answer leaves nothing useful to show.
-        setMessages((current) => current.filter((m) => m.id !== assistantId || m.content));
+        // A stopped answer with no text yet leaves nothing to show; an empty finished one gets a retry hint.
+        setMessages((current) =>
+          controller.signal.aborted
+            ? current.filter((m) => m.id !== assistantId || m.content)
+            : current.map((m) =>
+                m.id === assistantId && !m.content ? { ...m, content: "No answer came back. Try asking again.", error: true } : m
+              )
+        );
         setStreaming(false);
         abortRef.current = null;
       }

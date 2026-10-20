@@ -67,7 +67,7 @@ tags: ["Design system", "AI"]
 Highlight any text on the site and an **Ask about this** chip appears. Clicking it opens a chat sidepanel with the passage attached. The asterisk in the dock opens the same panel.
 
 - **Knowledge:** the profile in `src/data/resume.tsx`, every published case study, and any `.md` file in `knowledge/`. Drop new markdown files there, one topic per file, with an optional `title` frontmatter.
-- **Model:** any OpenAI-compatible chat API, called from `src/app/api/chat/route.ts`. By default it uses the Gemini free tier. Copy `.env.example` to `.env.local` and set `LLM_API_KEY` (get one at [aistudio.google.com/apikey](https://aistudio.google.com/apikey)). On Vercel, add the same variables under Project Settings → Environment Variables.
+- **Model:** any OpenAI-compatible chat API, called from `src/app/api/chat/route.ts`. By default it uses a cheap paid model on OpenRouter (`anthropic/claude-haiku-5.5`), falling back to OpenRouter's free models router (`openrouter/free`). Set a monthly credit limit on the OpenRouter key to cap spend. Copy `.env.example` to `.env.local` and set `LLM_API_KEY` (get one at [openrouter.ai/settings/keys](https://openrouter.ai/settings/keys)). On Vercel, add the same variables under Project Settings → Environment Variables, with Production and Preview both ticked. `LLM_MODEL` takes a comma-separated list; later models are fallbacks.
 - **Limits:** 10 questions per minute per visitor, the last 12 messages, and 800 output tokens per answer.
 
 ## Credits

@@ -1,11 +1,22 @@
+import { DATA } from "@/data/resume";
 import { SYSTEM_PROMPT } from "@/lib/ask/knowledge";
 
 /**
- * Streams answers from any OpenAI-compatible chat API. Defaults to Google's
- * Gemini free tier; point LLM_BASE_URL/LLM_MODEL at Groq, OpenRouter, etc.
+ * Streams answers from any OpenAI-compatible chat API. Defaults to OpenRouter's
+ * free models router; point LLM_BASE_URL/LLM_MODEL at Gemini, Groq, etc.
  */
-const BASE_URL = process.env.LLM_BASE_URL ?? "https://generativelanguage.googleapis.com/v1beta/openai";
-const MODEL = process.env.LLM_MODEL ?? "gemini-flash-latest";
+const BASE_URL = process.env.LLM_BASE_URL ?? "https://openrouter.ai/api/v1";
+/**
+ * Tried in order: a model that is overloaded, rate limited, missing or out of
+ * credit hands over to the next. A cheap paid model first for steady quality,
+ * then OpenRouter's free router so the panel keeps answering.
+ */
+const MODELS = (process.env.LLM_MODEL ?? "anthropic/claude-haiku-5.5,openrouter/free")
+  .split(",")
+  .map((model) => model.trim())
+  .filter(Boolean);
+// 402 is OpenRouter's "out of credits".
+const RETRYABLE_STATUSES = new Set([402, 404, 429, 500, 502, 503]);
 
 const MAX_MESSAGES = 12;
 const MAX_MESSAGE_CHARS = 2000;
@@ -59,18 +70,32 @@ export async function POST(request: Request) {
     ? `${SYSTEM_PROMPT}\n\n# Passage the visitor highlighted on the page\n"""\n${parsed.quote}\n"""`
     : SYSTEM_PROMPT;
 
-  const upstream = await fetch(`${BASE_URL}/chat/completions`, {
-    method: "POST",
-    headers: { "Content-Type": "application/json", Authorization: `Bearer ${apiKey}` },
-    body: JSON.stringify({
-      model: MODEL,
-      stream: true,
-      temperature: 0.4,
-      max_tokens: 800,
-      messages: [{ role: "system", content: system }, ...parsed.messages],
-    }),
-    signal: request.signal,
-  }).catch(() => null);
+  let upstream: Response | null = null;
+  for (const model of MODELS) {
+    upstream = await fetch(`${BASE_URL}/chat/completions`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${apiKey}`,
+        // Optional OpenRouter attribution; other providers ignore these.
+        "HTTP-Referer": DATA.url,
+        "X-Title": DATA.name,
+      },
+      body: JSON.stringify({
+        model,
+        stream: true,
+        temperature: 0.4,
+        max_tokens: 800,
+        messages: [{ role: "system", content: system }, ...parsed.messages],
+      }),
+      signal: request.signal,
+    }).catch(() => null);
+
+    if (upstream?.ok || (upstream && !RETRYABLE_STATUSES.has(upstream.status))) break;
+    if (model !== MODELS[MODELS.length - 1]) {
+      console.warn("LLM model failed, trying next", model, upstream?.status, await upstream?.text().catch(() => ""));
+    }
+  }
 
   if (!upstream?.ok || !upstream.body) {
     const status = upstream?.status === 429 ? 429 : 502;
