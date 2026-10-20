@@ -45,7 +45,8 @@ function parseBody(body: unknown): { messages: ChatMessage[]; quote?: string } |
 }
 
 export async function POST(request: Request) {
-  const apiKey = process.env.LLM_API_KEY;
+  // Trimmed because keys pasted into dashboards often pick up a trailing newline.
+  const apiKey = process.env.LLM_API_KEY?.trim();
   if (!apiKey) return new Response("The assistant isn't configured yet.", { status: 503 });
 
   const ip = request.headers.get("x-forwarded-for")?.split(",")[0]?.trim() ?? "unknown";
@@ -75,7 +76,9 @@ export async function POST(request: Request) {
     const status = upstream?.status === 429 ? 429 : 502;
     console.error("LLM request failed", upstream?.status, await upstream?.text().catch(() => ""));
     return new Response(
-      status === 429 ? "The assistant is busy right now. Try again in a minute." : "The assistant is unavailable right now.",
+      status === 429
+        ? "The assistant is busy right now. Try again in a minute."
+        : `The assistant is unavailable right now (${upstream ? `model API returned ${upstream.status}` : "model API unreachable"}).`,
       { status }
     );
   }
