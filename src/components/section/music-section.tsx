@@ -1,86 +1,21 @@
-"use client";
-
 import BlurFade from "@/components/magicui/blur-fade";
+import { RecordShelf } from "@/components/record-shelf";
 import { VideoCard } from "@/components/video-card";
 import { DATA } from "@/data/resume";
-import { cn } from "@/lib/utils";
-import { AnimatePresence, motion } from "motion/react";
-import { useEffect, useState } from "react";
+import { fetchSpotifyCover, toSpotifyUri } from "@/lib/spotify";
 
 const BLUR_FADE_DELAY = 0.04;
-const ROTATE_MS = 6000;
 
-function OnRepeat() {
-  const tracks = DATA.music.onRepeat;
-  const [active, setActive] = useState(0);
-  const [autoRotate, setAutoRotate] = useState(true);
-
-  useEffect(() => {
-    if (!autoRotate) return;
-    const timer = window.setInterval(
-      () => setActive((prev) => (prev + 1) % tracks.length),
-      ROTATE_MS
-    );
-    return () => window.clearInterval(timer);
-  }, [autoRotate, tracks.length]);
-
-  // Any deliberate interaction wins over the carousel, so a track the
-  // viewer picked is never swapped out from under them.
-  const stopRotating = () => setAutoRotate(false);
-  const current = tracks[active];
-
-  return (
-    <div className="flex flex-col gap-4">
-      <div
-        className="rounded-xl border border-border overflow-hidden"
-        onMouseEnter={stopRotating}
-        onTouchStart={stopRotating}
-      >
-        <AnimatePresence mode="wait">
-          <motion.div
-            key={current.trackId}
-            initial={{ opacity: 0, y: 12 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -12 }}
-            transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
-          >
-            <iframe
-              title={`${current.artist} - ${current.track}`}
-              src={`https://open.spotify.com/embed/track/${current.trackId}?utm_source=generator`}
-              className="w-full block h-38"
-              allow="clipboard-write; encrypted-media; fullscreen; picture-in-picture"
-              loading="lazy"
-            />
-          </motion.div>
-        </AnimatePresence>
-      </div>
-      <div className="flex items-center justify-center gap-2">
-        {tracks.map((track, index) => (
-          <button
-            key={track.trackId}
-            type="button"
-            onClick={() => {
-              setActive(index);
-              stopRotating();
-            }}
-            aria-label={`Play ${track.track} by ${track.artist}`}
-            aria-pressed={index === active}
-            className="h-9 w-10 flex items-center justify-center cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring rounded-sm"
-          >
-            <span
-              className={cn(
-                "h-0.5 w-7 rounded-full transition-colors duration-200",
-                index === active ? "bg-foreground" : "bg-border"
-              )}
-            />
-          </button>
-        ))}
-      </div>
-    </div>
+export default async function MusicSection() {
+  const records = await Promise.all(
+    DATA.music.onRepeat.map(async ({ url, artist, title }) => ({
+      uri: toSpotifyUri(url),
+      artist,
+      title,
+      cover: await fetchSpotifyCover(url),
+    }))
   );
-}
 
-export default function MusicSection() {
   return (
     <section id="music">
       <div className="flex min-h-0 flex-col gap-y-8">
@@ -109,7 +44,7 @@ export default function MusicSection() {
               On repeat
             </h3>
             <BlurFade delay={BLUR_FADE_DELAY * 12}>
-              <OnRepeat />
+              <RecordShelf records={records} />
             </BlurFade>
           </div>
 
