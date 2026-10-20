@@ -88,10 +88,10 @@
   --grid-accent-3: #7a5cc9;
   --grid-accent-4: #4a7bc9;
   --grid-accent-5: #f5c94a;
-  /* Ask AI: selection highlight, text caret and chip share this accent. */
-  --ask-accent: #c94a3f;
+  /* Ask AI: selection highlight, text caret and chip share this accent (monochrome, like --primary). */
+  --ask-accent: #171717;
   --ask-accent-foreground: #ffffff;
-  --ask-caret: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='6' height='24'%3E%3Crect x='2' y='1' width='2' height='22' rx='1' fill='%23c94a3f'/%3E%3C/svg%3E") 3 12;
+  --ask-caret: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='6' height='24'%3E%3Crect x='2' y='1' width='2' height='22' rx='1' fill='%23171717'/%3E%3C/svg%3E") 3 12;
 }
 
 .dark {
@@ -127,9 +127,9 @@
   --sidebar-accent-foreground: oklch(0.985 0 0);
   --sidebar-border: oklch(1 0 0 / 10%);
   --sidebar-ring: oklch(0.556 0 0);
-  --ask-accent: #ef7d6e;
+  --ask-accent: #ededed;
   --ask-accent-foreground: #1c1c1c;
-  --ask-caret: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='6' height='24'%3E%3Crect x='2' y='1' width='2' height='22' rx='1' fill='%23ef7d6e'/%3E%3C/svg%3E") 3 12;
+  --ask-caret: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='6' height='24'%3E%3Crect x='2' y='1' width='2' height='22' rx='1' fill='%23ededed'/%3E%3C/svg%3E") 3 12;
 }
 
 @layer base {
@@ -141,9 +141,9 @@
     @apply bg-background text-foreground;
   }
 
-  /* Highlighting page text is how visitors reach the Ask AI chip, so it gets the brand accent. */
+  /* Highlighting page text is how visitors reach the Ask AI chip, so it gets the Ask accent. */
   main ::selection {
-    background-color: color-mix(in oklab, var(--ask-accent) 16%, transparent);
+    background-color: color-mix(in oklab, var(--ask-accent) 12%, transparent);
     color: var(--ask-accent);
   }
 
