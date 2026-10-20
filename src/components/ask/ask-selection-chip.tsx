@@ -88,7 +88,7 @@ export function AskSelectionChip() {
           <button
             type="button"
             data-ask-chip
-            className="flex -translate-y-full items-center gap-1.5 whitespace-nowrap rounded-md bg-primary px-2.5 py-1.5 text-xs font-medium text-primary-foreground shadow-[0_10px_40px_-10px_rgba(0,0,0,0.3)] hover:bg-primary/90 cursor-pointer"
+            className="flex -translate-y-full items-center gap-1.5 whitespace-nowrap rounded-md bg-ask px-2.5 py-1.5 text-xs font-medium text-ask-foreground shadow-[0_10px_40px_-10px_rgba(0,0,0,0.3)] hover:bg-ask/90 cursor-pointer"
             // Keep the highlight alive: a normal mousedown would clear the selection first.
             onMouseDown={(event) => event.preventDefault()}
             onClick={() => {
