@@ -5,7 +5,7 @@ import { SYSTEM_PROMPT } from "@/lib/ask/knowledge";
  * Gemini free tier; point LLM_BASE_URL/LLM_MODEL at Groq, OpenRouter, etc.
  */
 const BASE_URL = process.env.LLM_BASE_URL ?? "https://generativelanguage.googleapis.com/v1beta/openai";
-const MODEL = process.env.LLM_MODEL ?? "gemini-2.5-flash";
+const MODEL = process.env.LLM_MODEL ?? "gemini-flash-latest";
 
 const MAX_MESSAGES = 12;
 const MAX_MESSAGE_CHARS = 2000;
