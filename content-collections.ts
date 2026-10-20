@@ -34,7 +34,19 @@ const caseStudies = defineCollection({
     },
 });
 
+/** Markdown notes for the "Ask" chat. Never rendered, only fed to the LLM as context. */
+const knowledge = defineCollection({
+    name: "knowledge",
+    directory: "knowledge",
+    include: "**/*.md",
+    exclude: "README.md",
+    schema: z.object({
+        title: z.string().optional(),
+        content: z.string(),
+    }),
+});
+
 export default defineConfig({
-    collections: [caseStudies],
+    collections: [caseStudies, knowledge],
 });
 

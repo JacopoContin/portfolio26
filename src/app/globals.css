@@ -44,6 +44,8 @@
   --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-ring: var(--sidebar-ring);
+  --color-ask: var(--ask-accent);
+  --color-ask-foreground: var(--ask-accent-foreground);
 }
 
 :root {
@@ -103,6 +105,10 @@
   --headshell: oklch(0.32 0.006 60);
   --cartridge: oklch(0.2 0.004 60);
   --key-glyph: oklch(0.45 0.006 70);
+  /* Ask AI: selection highlight, text caret and chip share this accent (monochrome, like --primary). */
+  --ask-accent: #171717;
+  --ask-accent-foreground: #ffffff;
+  --ask-caret: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='6' height='24'%3E%3Crect x='2' y='1' width='2' height='22' rx='1' fill='%23171717'/%3E%3C/svg%3E") 3 12;
 }
 
 .dark {
@@ -151,6 +157,9 @@
   --headshell: oklch(0.38 0.006 70);
   --cartridge: oklch(0.2 0.004 60);
   --key-glyph: oklch(0.66 0.006 80);
+  --ask-accent: #ededed;
+  --ask-accent-foreground: #1c1c1c;
+  --ask-caret: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='6' height='24'%3E%3Crect x='2' y='1' width='2' height='22' rx='1' fill='%23ededed'/%3E%3C/svg%3E") 3 12;
 }
 
 @layer base {
@@ -160,6 +169,20 @@
 
   body {
     @apply bg-background text-foreground;
+  }
+
+  /* Highlighting page text is how visitors reach the Ask AI chip, so it gets the Ask accent. */
+  main ::selection {
+    background-color: color-mix(in oklab, var(--ask-accent) 12%, transparent);
+    color: var(--ask-accent);
+  }
+
+  /* An accent caret over readable text hints that it can be selected. Links and buttons keep their own cursor. */
+  main
+    :is(h1, h2, h3, h4, h5, h6, p, li, blockquote, figcaption, td, th, dt, dd, span):not(
+      :is(a, button, label, [role="button"]) *
+    ) {
+    cursor: var(--ask-caret), text;
   }
 
   /* Shiki dual theme support */
