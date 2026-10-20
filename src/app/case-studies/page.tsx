@@ -1,6 +1,6 @@
 import BlurFade from "@/components/magicui/blur-fade";
 import { sortedCaseStudies } from "@/lib/case-studies";
-import Image from "next/image";
+import { ThemedImage } from "@/components/themed-image";
 import Link from "next/link";
 import type { Metadata } from "next";
 import { ArrowUpRight, ChevronRight, Sparkles } from "lucide-react";
@@ -64,7 +64,7 @@ export default function CaseStudiesPage() {
                         {previews[slug] ? (
                           <div className="flex size-full items-center justify-center">{previews[slug]}</div>
                         ) : study.image ? (
-                          <Image
+                          <ThemedImage
                             src={study.image}
                             alt=""
                             fill
@@ -155,7 +155,7 @@ export default function CaseStudiesPage() {
                 >
                   <div className="relative aspect-video w-28 shrink-0 overflow-hidden rounded-lg bg-muted ring-1 ring-border transition-shadow duration-300 group-hover:ring-foreground/20 sm:w-44">
                     {project.image ? (
-                      <Image
+                      <ThemedImage
                         src={project.image}
                         alt=""
                         fill

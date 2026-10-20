@@ -29,6 +29,7 @@ Open [localhost:3000](http://localhost:3000).
 | `pnpm start`    | Serve the production build  |
 | `pnpm lint`     | Run ESLint and shadcn lint  |
 | `pnpm lint:fix` | Auto-fix lint issues        |
+| `pnpm images:dark` | Regenerate dark-mode images |
 
 ## Project structure
 
@@ -61,6 +62,16 @@ tags: ["Design system", "AI"]
 - The file name becomes the URL slug (`content/jds.mdx` → `/case-studies/jds`).
 - `order` is optional: lower numbers come first, and unordered studies follow, newest first.
 - Add `draft: true` to hide a study in production. Drafts still show in `pnpm dev`.
+
+## Dark-mode images
+
+Light screenshots and logos get a generated dark twin (`name.dark.png`) that the site swaps in under the dark theme. To add an image or refresh one after replacing it, list it in `scripts/dark-images.mjs` (`logo` or `screenshot`) and run:
+
+```bash
+pnpm images:dark
+```
+
+This rewrites the `.dark.png` files and `src/data/dark-images.json`. Images that are already dark, like the JDS cover, don't need one.
 
 ## Ask AI panel
 
