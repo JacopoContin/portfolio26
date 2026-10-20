@@ -738,3 +738,28 @@
     }
   }
 }
+
+/* The Ask panel pushes the page aside on wider screens instead of covering it; on phones it overlays.
+   Width and easing match the panel in ask-panel.tsx.
+   Unlayered so it beats the dock's inset-x-0 utility. */
+body,
+.ask-push-fixed {
+  transition: padding-right 0.35s cubic-bezier(0.32, 0.72, 0, 1), right 0.35s cubic-bezier(0.32, 0.72, 0, 1);
+}
+
+@media (min-width: 40rem) {
+  html[data-ask-open] body {
+    padding-right: 25rem;
+  }
+
+  html[data-ask-open] .ask-push-fixed {
+    right: 25rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  body,
+  .ask-push-fixed {
+    transition: none;
+  }
+}
