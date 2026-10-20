@@ -6,7 +6,7 @@ import { DATA } from "@/data/resume";
 import { cn } from "@/lib/utils";
 import { ArrowUp, Asterisk, RotateCcw, Square, X } from "lucide-react";
 import { AnimatePresence, motion } from "motion/react";
-import { useEffect, useRef, useState, type FormEvent, type KeyboardEvent } from "react";
+import { useEffect, useRef, useState, type CSSProperties, type FormEvent, type KeyboardEvent } from "react";
 import Markdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 
@@ -84,8 +84,9 @@ export function AskPanel() {
   const inputRef = useRef<HTMLTextAreaElement>(null);
   const scrollRef = useRef<HTMLDivElement>(null);
 
+  // On touch screens focusing pops the keyboard over the panel before the visitor has seen it, so only focus with a mouse.
   useEffect(() => {
-    if (open) inputRef.current?.focus();
+    if (open && window.matchMedia("(pointer: fine)").matches) inputRef.current?.focus();
   }, [open, quote]);
 
   useEffect(() => {
@@ -97,9 +98,26 @@ export function AskPanel() {
     return () => window.removeEventListener("keydown", onKeyDown);
   }, [open, setOpen]);
 
+  // iOS doesn't resize the layout viewport for the keyboard or zoom; it pans the page, pushing a full-screen panel's
+  // header and left edge out of view. On phones the panel tracks the visible area instead (see the sm: overrides below).
+  const [viewport, setViewport] = useState<{ top: number; left: number; width: number; height: number } | null>(null);
+  useEffect(() => {
+    const visual = window.visualViewport;
+    if (!open || !visual) return;
+    const sync = () =>
+      setViewport({ top: visual.offsetTop, left: visual.offsetLeft, width: visual.width, height: visual.height });
+    sync();
+    visual.addEventListener("resize", sync);
+    visual.addEventListener("scroll", sync);
+    return () => {
+      visual.removeEventListener("resize", sync);
+      visual.removeEventListener("scroll", sync);
+    };
+  }, [open]);
+
   useEffect(() => {
     scrollRef.current?.scrollTo({ top: scrollRef.current.scrollHeight });
-  }, [messages]);
+  }, [messages, viewport?.height]);
 
   const submit = (text: string) => {
     if (!text.trim() || streaming) return;
@@ -132,7 +150,17 @@ export function AskPanel() {
           animate={{ x: 0 }}
           exit={{ x: "100%" }}
           transition={{ duration: 0.35, ease: [0.32, 0.72, 0, 1] }}
-          className="fixed inset-y-0 right-0 z-50 flex w-full flex-col border-l bg-card shadow-[0_0_40px_-10px_rgba(0,0,0,0.25)] sm:w-100"
+          style={
+            viewport
+              ? ({
+                  "--ask-top": `${viewport.top}px`,
+                  "--ask-left": `${viewport.left}px`,
+                  "--ask-width": `${viewport.width}px`,
+                  "--ask-height": `${viewport.height}px`,
+                } as CSSProperties)
+              : undefined
+          }
+          className="fixed top-[var(--ask-top,0px)] left-[var(--ask-left,0px)] z-50 flex h-[var(--ask-height,100%)] w-[var(--ask-width,100%)] flex-col border-l bg-card shadow-[0_0_40px_-10px_rgba(0,0,0,0.25)] sm:inset-y-0 sm:right-0 sm:left-auto sm:h-auto sm:w-100"
         >
           <header className="flex items-center gap-2 border-b px-4 py-3">
             <span className="flex size-6 items-center justify-center rounded-md bg-primary text-primary-foreground">
@@ -159,7 +187,7 @@ export function AskPanel() {
             </button>
           </header>
 
-          <div ref={scrollRef} className="flex-1 overflow-y-auto px-4 py-4" aria-live="polite">
+          <div ref={scrollRef} className="flex-1 overflow-y-auto overscroll-contain px-4 py-4" aria-live="polite">
             {messages.length === 0 ? (
               <div className="flex h-full flex-col justify-end gap-4">
                 <div className="space-y-1">
@@ -202,7 +230,7 @@ export function AskPanel() {
                   rows={1}
                   maxLength={2000}
                   placeholder={quote ? "What would you like to know about this?" : "Ask a question…"}
-                  className="field-sizing-content max-h-40 min-h-8 flex-1 resize-none bg-transparent px-1.5 py-1 text-sm outline-none placeholder:text-muted-foreground"
+                  className="field-sizing-content max-h-40 min-h-8 flex-1 resize-none bg-transparent px-1.5 py-1 text-base outline-none sm:text-sm placeholder:text-muted-foreground"
                 />
                 {streaming ? (
                   <button
